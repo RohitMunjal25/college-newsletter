@@ -33,7 +33,7 @@ setInterval(() => {
   updatePositions();
 }, 3500);
 // 🔗 BACKEND API URL (yahan apna Render wala URL daal)
-const API_URL = "https://YOUR-BACKEND.onrender.com/api/chat";
+const API_URL = "https://chatbot-newsletter.onrender.com/api/chat";
 
 // HTML elements
 const input = document.getElementById("chat-input");
