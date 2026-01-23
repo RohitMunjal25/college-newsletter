@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newsletter 2026</title>
-</head>
-<body>
+
       <title>Newsletter</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div class="circle-wrapper">
 
   <div class="center">
@@ -54,9 +52,26 @@
     <img src="images/page1.jpg"><span>Page 12</span>
   </a>
 </div>
-<div id="chat-body"></div>
-<input id="chat-input" type="text" placeholder="Type here..." />
 
+
+<div id="chatbot-icon" onclick="toggleChatbot()">
+  🤖
+</div>
+
+
+<div id="chatbot-container">
+  <div class="chat-header">
+    AI Chatbot
+    <span onclick="toggleChatbot()">✖</span>
+  </div>
+
+  <div class="chat-messages" id="chatMessages"></div>
+
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Ask something..." />
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
