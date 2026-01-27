@@ -226,6 +226,44 @@ body {
     padding: 16px;
     font-size: 1rem;
   }
+  .navbar {
+    padding: 0 14px;
+    height: auto;
+    flex-wrap: wrap;
+  }
+
+  .nav-left {
+    gap: 10px;
+  }
+
+  .logo {
+    width: 110px;
+    height: auto;
+  }
+
+  .nav-title {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    max-width: 140px;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-right a {
+    font-size: 0.75rem;
+    margin-left: 0;
+  }
+
+  .nav-right .btn {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    border-radius: 14px;
+  }
+
 }
 
 /* ===== CHATBOT ICON ===== */
