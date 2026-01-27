@@ -183,38 +183,48 @@ body {
 }
 
 @media (max-width: 768px) {
-  body{
-    overflow-y:auto;
+
+  body {
+    overflow-x: hidden;
   }
-  .hero
-  {
-    min-height: calc(100vh - 64px);
-  }
-  .card{
-    width: 140px;
-  }
+
   .card-carousel {
-    height: 260px;
-    margin-top: 60px;
+    height: auto;
+    margin-top: 40px;
+    perspective: none;
+  }
+
+  .card {
+    position: static;
+    width: 90%;
+    max-width: 320px;
+    margin: 0 auto;
+    opacity: 1;
+    transform: none !important;
+    filter: none;
+  }
+
+  /* sirf active card dikhe */
+  .card:not(.active) {
+    display: none;
   }
 
   .card.active {
-    width: 190px;
-    transform:translateX(0);
+    box-shadow: 0 0 40px rgba(56,189,248,.6);
   }
 
-  .card.left {
-    transform: translateX(-120px);
+  .hero h1 {
+    font-size: 1.5rem;
   }
 
-  .card.right {
-    transform: translateX(120px);
+  .hero p {
+    font-size: 0.9rem;
   }
 
-  .card.far-left,
-  .card.far-right {
-    opacity: 0;
-    pointer-events: none;
+  .enter-btn {
+    width: 90%;
+    padding: 16px;
+    font-size: 1rem;
   }
 }
 
