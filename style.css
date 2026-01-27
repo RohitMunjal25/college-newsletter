@@ -3,8 +3,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f4f6f8;
   font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
 }
 
 .circle-wrapper {

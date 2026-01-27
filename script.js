@@ -81,8 +81,8 @@ function showPredefinedQuestions() {
 
   chatBox.innerHTML += `
     <div class="quick-questions">
-      <button onclick="sendQuick('Where can I download the newsletter?')">
-        📄 Download newsletter
+      <button onclick="sendQuick('download free newsletter')">
+        📄 download free newsletter
       </button>
       <button onclick="sendQuick('What is this newsletter about?')">
         ℹ️ About newsletter
@@ -95,6 +95,7 @@ function showPredefinedQuestions() {
       </button>
       <button onCLick="sendQuick('How to subscribe')">Subscribe for newsletter</button>
     </div>
+  
   `;
 }
 
