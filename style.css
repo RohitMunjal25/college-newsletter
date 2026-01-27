@@ -67,13 +67,14 @@ body {
 }
 
 .hero h1 {
-  font-size: 2.6rem;
+  font-size:clamp(1.6rem,5vw,2.6rem);
   text-shadow: 0 0 20px rgba(56,189,248,.6);
 }
 
 .hero p {
   margin-top: 6px;
   color: #94a3b8;
+  font-size:clamp(0.8rem,3vw,1rem)
 }
 
 /* ================================================= */
@@ -94,10 +95,10 @@ body {
 /* BASE CARD */
 .card {
   position: absolute;
-  width: 170px;
+  width: clamp(140px,18vw,180px);
   transition: all 1s cubic-bezier(0.22, 0.61, 0.36, 1);
   opacity: 0;
-  transform: scale(0.6);
+  transform: translateX(0);
 }
 
 .card img {
@@ -116,10 +117,12 @@ body {
 
 /* CENTER CARD */
 .card.active {
-  transform: translateX(0) scale(1.4);
+  transform: translateX(0);
   opacity: 1;
   z-index: 5;
   box-shadow: 0 0 80px rgba(56,189,248,.9);
+  width: clamp(200px,28vw,260px);
+  }
   .card.active::after {
   content: "";
   position: absolute;
@@ -129,18 +132,16 @@ body {
   z-index: -1;
 }
 
-}
-
 /* LEFT & RIGHT */
 .card.left {
-  transform: translateX(-220px) scale(0.9) rotateY(25deg);
+  transform: translateX(-220px) rotateY(25deg);
   opacity: 0.6;
   z-index: 3;
   filter: blur(1px);
 }
 
 .card.right {
-  transform: translateX(220px) scale(0.9) rotateY(-25deg);
+  transform: translateX(220px) rotateY(-25deg);
   opacity: 0.6;
   z-index: 3;
   filter: blur(1px);
@@ -148,12 +149,12 @@ body {
 
 /* FAR CARDS */
 .card.far-left {
-  transform: translateX(-380px) scale(0.6);
+  transform: translateX(-380px);
   opacity: 0.25;
 }
 
 .card.far-right {
-  transform: translateX(380px) scale(0.6);
+  transform: translateX(380px);
   opacity: 0.25;
 }
 
@@ -175,7 +176,45 @@ body {
   font-size: .8rem;
   opacity: .8;
 }
+
+@media (max-width: 768px) {
+  .card{
+    width: 140px;
+  }
+  .card-carousel {
+    height: 260px;
+    margin-top: 60px;
+  }
+
+  .card.active {
+    width: 190px;
+    transform:translateX(0);
+  }
+
+  .card.left {
+    transform: translateX(-120px);
+  }
+
+  .card.right {
+    transform: translateX(120px);
+  }
+
+  .card.far-left,
+  .card.far-right {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 /* ===== CHATBOT ICON ===== */
+@media (max-width: 480px) {
+  #chatbot-container {
+    width: 92%;
+    right: 4%;
+    height: 420px;
+  }
+}
+
 #chatbot-icon {
   position: fixed;
   bottom: 24px;
