@@ -31,17 +31,31 @@ setInterval(() => {
    CHATBOT (UNCHANGED)
 ================================ */
 
+/* ===============================
+   CHATBOT (FOCUS + NORMAL MODE)
+================================ */
+
 let welcomeShown = false;
 
-window.toggleChatbot = function () {
+/* OPEN CHATBOT */
+function openChatbot(mode = "normal") {
   const chat = document.getElementById("chatbot-container");
   const chatBox = document.getElementById("chatMessages");
 
   if (!chat || !chatBox) return;
 
-  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+  chat.style.display = "flex";
 
-  if (chat.style.display === "flex" && !welcomeShown) {
+  if (mode === "focus") {
+    chat.classList.add("focus-mode");
+    document.body.classList.add("chatbot-focus");
+  } else {
+    chat.classList.remove("focus-mode");
+    document.body.classList.remove("chatbot-focus");
+  }
+
+  // welcome message only once
+  if (!welcomeShown) {
     chatBox.innerHTML += `
       <div class="bot-msg">
         👋 <b>Welcome!</b><br>
@@ -51,8 +65,17 @@ window.toggleChatbot = function () {
     showPredefinedQuestions();
     welcomeShown = true;
   }
-};
+}
 
+/* CLOSE CHATBOT */
+function closeChatbot() {
+  const chat = document.getElementById("chatbot-container");
+  chat.style.display = "none";
+  chat.classList.remove("focus-mode");
+  document.body.classList.remove("chatbot-focus");
+}
+
+/* SEND CHAT */
 async function sendChat() {
   const input = document.getElementById("chatInput");
   const msg = input.value.trim();
@@ -73,6 +96,7 @@ async function sendChat() {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+/* QUICK QUESTIONS */
 function showPredefinedQuestions() {
   const chatBox = document.getElementById("chatMessages");
 
@@ -91,28 +115,12 @@ function sendQuick(text) {
   document.getElementById("chatInput").value = text;
   sendChat();
 }
-const chatInput = document.getElementById("chatInput");
 
+/* ENTER KEY = SEND */
+const chatInput = document.getElementById("chatInput");
 chatInput.addEventListener("keydown", function (e) {
   if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();   
-    sendChat();           
+    e.preventDefault();
+    sendChat();
   }
-});
-const enterBtn = document.querySelector(".enter-btn");
-const overlay = document.getElementById("welcome-overlay");
-
-enterBtn.addEventListener("click", () => {
-  // show black screen
-  overlay.classList.add("active");
-
-  // after 2.5 sec, hide overlay & start newsletter
-  setTimeout(() => {
-    overlay.classList.remove("active");
-
-    // yahan future me tu
-    // window.location = "newsletter.html";
-    // ya start animation
-    console.log("Newsletter started");
-  }, 2500);
 });

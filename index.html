@@ -29,57 +29,78 @@
   <h1>✨ Interactive Digital Newsletter ✨</h1>
   <p>CSE Department • Session 2026–27</p>
 
-  <!-- ===== CARD CAROUSEL (PHOTO STYLE) ===== -->
   <div class="card-carousel">
+    <div class="card extreme-left"><img src="images/page1.jpg"><span>Editorial</span></div>
+    <div class="card extreme-left"><img src="images/page1.jpg"><span>Message</span></div>
 
-    <div class="card active">
-      <img src="./images/page1.jpg" alt="Cover">
-      <span>Cover</span>
-    </div>
+    <div class="card far-left"><img src="images/page1.jpg"><span>Vision & Mission</span></div>
+    <div class="card far-left"><img src="images/page1.jpg"><span>Achievements</span></div>
 
-    <div class="card">
-      <img src="./images/page1.jpg" alt="Editorial">
-      <span>Editorial</span>
-    </div>
+    <div class="card left"><img src="images/page1.jpg"><span>Gallery</span></div>
 
-    <div class="card">
-      <img src="./images/page1.jpg" alt="Achievements">
-      <span>Achievements</span>
-    </div>
+    <div class="card active"><img src="images/page1.jpg"><span>Cover Page</span></div>
 
-    <div class="card">
-      <img src="./images/page1.jpg" alt="Faculty">
-      <span>Faculty</span>
-    </div>
+    <div class="card right"><img src="images/page1.jpg"><span>Faculty</span></div>
 
-    <div class="card">
-      <img src="./images/page1.jpg" alt="Events">
-      <span>Events</span>
-    </div>
+    <div class="card far-right"><img src="images/page1.jpg"><span>Events</span></div>
+    <div class="card far-right"><img src="images/page1.jpg"><span>Workshops</span></div>
 
-    <div class="card">
-      <img src="./images/page1.jpg" alt="Projects">
-      <span>Projects</span>
-    </div>
-
+    <div class="card extreme-right"><img src="images/page1.jpg"><span>Projects</span></div>
+    <div class="card extreme-right"><img src="images/page1.jpg"><span>Alumni</span></div>
+    <div class="card extreme-right"><img src="images/page1.jpg"><span>Placements</span></div>
   </div>
 
-  <!-- ===== CTA ===== -->
   <button class="enter-btn">
     ENTER NEWSLETTER
     <span>Interactive 3D Experience</span>
   </button>
-
 </section>
-<div id="chatbot-icon" onclick="toggleChatbot()">
+<!-- ===== BOTTOM ACTION BUTTONS ===== -->
+<div class="bottom-actions">
+
+  <div class="action-card" id="introBtn" onclick="window.open('https://mitrc.ac.in/apply-for-admission/','_blank')">
+    <span class="icon">&#9742;</span>
+    <div class="text">
+      <h4>Contact us</h4>
+      <p>For admission inquiry</p>
+    </div>
+  </div>
+
+  <div class="action-card" id="downloadBtn" onclick="window.open('http://raw.githubusercontent.com/RohitMunjal25/college-newsletter/main/images/C.S.E%20NEWSLETTER%202024-25.pdf')">
+    <span class="icon">📄</span>
+    <div class="text">
+      <h4>Download PDF</h4>
+      <p>Get full newsletter</p>
+    </div>
+  </div>
+
+  <div class="action-card" id="chatbotBtn" onclick="openChatbot('focus')">
+    <span class="icon">🤖</span>
+    <div class="text">
+      <h4>Ask the Chatbot</h4>
+      <p>AI powered help</p>
+    </div>
+  </div>
+
+  <div class="action-card" id="aboutBtn">
+    <span class="icon">ℹ️</span>
+    <div class="text">
+      <h4>About Newsletter</h4>
+      <p>Know more details</p>
+    </div>
+  </div>
+
+</div>
+<div id="chatbot-icon" onclick="openChatbot('normal')">
   🤖
 </div>
+
 
 
 <div id="chatbot-container">
   <div class="chat-header">
     AI Chatbot
-    <span onclick="toggleChatbot()">✖</span>
+    <span onclick="closeChatbot()">✖</span>
   </div>
 
   <div class="chat-messages" id="chatMessages"></div>
