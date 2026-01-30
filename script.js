@@ -3,7 +3,7 @@
 ================================ */
 
 const cards = document.querySelectorAll(".card");
-let current = 0;
+let current = 5;
 
 function updateCards() {
   cards.forEach((card, i) => {
@@ -124,3 +124,28 @@ chatInput.addEventListener("keydown", function (e) {
     sendChat();
   }
 });
+function openAboutCollege() {
+  const overlay = document.getElementById("aboutOverlay");
+  const loader = document.getElementById("aboutLoader");
+  const content = document.getElementById("aboutContent");
+  const video = document.getElementById("aboutVideo");
+
+  overlay.style.display = "block";
+  loader.style.display = "flex";
+  content.style.display = "none";
+
+  setTimeout(() => {
+    loader.style.display = "none";
+    content.style.display = "block";
+    video.play();
+  }, 2500); // loading time
+}
+
+function closeAbout() {
+  const overlay = document.getElementById("aboutOverlay");
+  const video = document.getElementById("aboutVideo");
+
+  video.pause();
+  video.currentTime = 0;
+  overlay.style.display = "none";
+}

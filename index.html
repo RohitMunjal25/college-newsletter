@@ -15,12 +15,13 @@
 <header class="navbar">
   <div class="nav-left">
     <img src="./images/black logo.png" class="logo" alt="College Logo">
-    <span class="nav-title">Interactive Newsletter 2026–27</span>
+    <span class="nav-title">Interactive Newsletter 2025–26</span>
   </div>
 
   <div class="nav-right">
-    <a href="#about">About</a>
-    <a href="images/C.S.E NEWSLETTER 2024-25.pdf" class="btn" download>Download PDF</a>
+    <a href="javascript:void(0)" onclick="openAboutCollege()">About College</a>
+
+    <!-- <a href="images/C.S.E NEWSLETTER 2024-25.pdf" class="btn" download>Download PDF</a> -->
   </div>
 </header>
 
@@ -118,6 +119,39 @@
     <p>Loading immersive experience…</p>
   </div>
 </div>
+<!-- ===== ABOUT COLLEGE OVERLAY ===== -->
+<div id="aboutOverlay">
+
+  <!-- LOADER -->
+  <div id="aboutLoader">
+    <img src="images/loading.gif" alt="Loading">
+  </div>
+
+  <!-- VIDEO SECTION -->
+  <div id="aboutContent">
+    <video id="aboutVideo" controls>
+      <source src="images/MITRC collage alwar campus tour.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-info">
+      <h2>Dr. XYZ Sharma</h2>
+      <h4>Director – MITRC</h4>
+
+      <p class="visit-line">
+        For more information visit us on  
+        <a href="https://mitrc.ac.in" target="_blank">www.mitrc.ac.in</a>
+      </p>
+
+      <p class="contact">
+        📞 +91 9079881442
+      </p>
+    </div>
+
+    <span class="close-about" onclick="closeAbout()">✖</span>
+  </div>
+
+</div>
+
 
 
 <script src="script.js"></script>

@@ -21,15 +21,29 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 64px;
+  height: 68px;
   padding: 0 40px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(2,6,23,.6);
-  backdrop-filter: blur(12px);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(2,6,23,0.85),
+    rgba(2,6,23,0.55)
+  );
+
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(56,189,248,0.25);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.6),
+    0 0 40px rgba(56,189,248,0.15);
+
   z-index: 1000;
 }
+
 
 .nav-left {
   display: flex;
@@ -587,4 +601,84 @@ body.chatbot-focus > *:not(#chatbot-container) {
     width: 90%;
     height: 80vh;
   }
+}
+/* ===== ABOUT COLLEGE OVERLAY ===== */
+#aboutOverlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 99999;
+  display: none;
+}
+
+/* LOADER */
+#aboutLoader {
+  position: fixed;
+  inset: 0;
+  background-color: #000;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  z-index: 100000;
+}
+
+#aboutLoader img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENT */
+#aboutContent {
+  display: none;
+  position: relative;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  color: #fff;
+}
+
+#aboutContent video {
+  width: 80%;
+  max-width: 900px;
+  border-radius: 16px;
+  box-shadow: 0 0 60px rgba(56,189,248,0.6);
+}
+
+.video-info {
+  margin-top: 20px;
+}
+
+.video-info h2 {
+  font-size: 1.8rem;
+  color: #38bdf8;
+}
+
+.video-info h4 {
+  font-weight: 400;
+  color: #c7d2fe;
+}
+
+.visit-line {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.visit-line a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.contact {
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+/* CLOSE BUTTON */
+.close-about {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  cursor: pointer;
 }
