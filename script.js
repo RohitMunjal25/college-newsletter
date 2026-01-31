@@ -100,19 +100,31 @@ async function sendChat() {
   // BOT MESSAGE (AUTO IMAGE DETECT)
   let botHTML = `<div class="bot-msg"><b>Bot:</b><br>`;
 
-  if (
-    typeof data.reply === "string" &&
-    data.reply.match(/\.(jpg|jpeg|png|gif|webp)$/i)
-  ) {
-    botHTML += `<img src="${data.reply}" class="chat-img" loading="lazy">`;
-  } else {
-    botHTML += data.reply;
+if (typeof data.reply === "object" && data.reply !== null) {
+
+  if (data.reply.text) {
+    botHTML += `<p>${data.reply.text}</p>`;
   }
 
-  botHTML += `</div>`;
+  if (data.reply.image) {
+    botHTML += `<img src="${data.reply.image}" class="chat-img" loading="lazy">`;
+  }
 
-  chatBox.innerHTML += botHTML;
-  chatBox.scrollTop = chatBox.scrollHeight;
+} else if (
+  typeof data.reply === "string" &&
+  data.reply.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+) {
+
+  botHTML += `<img src="${data.reply}" class="chat-img" loading="lazy">`;
+
+} else {
+  botHTML += data.reply;
+}
+
+botHTML += `</div>`;
+chatBox.innerHTML += botHTML;
+chatBox.scrollTop = chatBox.scrollHeight;
+
 }
 
 /* QUICK QUESTIONS */
@@ -126,6 +138,7 @@ function showPredefinedQuestions() {
       <button onclick="sendQuick('Who should I contact for more info?')">📞 Contact details</button>
       <button onclick="sendQuick('What departments are covered?')">🏫 Departments</button>
       <button onclick="sendQuick('How to subscribe')">⭐ Subscribe</button>
+      <button onclick="sendQuick('seminar and workshops')">seminar and workshops</button>
     </div>
   `;
 }
