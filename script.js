@@ -91,37 +91,61 @@ async function sendChat() {
   /* ===============================
      EMAIL MODE (NO GPT, NO IMAGE)
   =============================== */
-  if (chatMode === "email") {
+if (chatMode === "email") {
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(msg)) {
-      chatBox.innerHTML += `
-        <div class="bot-msg">❌ Enter a valid email address</div>
-      `;
-      chatBox.scrollTop = chatBox.scrollHeight;
-      return;
-    }
-
-    chatBox.innerHTML += `<div class="user-msg">${msg}</div>`;
-
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(msg)) {
     chatBox.innerHTML += `
-      <div class="bot-msg">
-        ✅ <b>Subscribed successfully!</b><br>
-        Use quick options below 👇
-      </div>
+      <div class="bot-msg">❌ Enter a valid email address</div>
     `;
-
-    // RESET BACK TO QUICK MODE
-    chatMode = "quick";
-    input.value = "";
-    input.disabled = true;
-    input.type = "text";
-    input.placeholder = "Choose a quick option below";
-
-    showPredefinedQuestions();
     chatBox.scrollTop = chatBox.scrollHeight;
     return;
   }
+
+  // USER EMAIL SHOW
+  chatBox.innerHTML += `<div class="user-msg">${msg}</div>`;
+
+  try {
+    
+    const res = await fetch("https://chatbot-newsletter.onrender.com/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: msg })
+    });
+
+    const data = await res.json();
+
+    if (data.status === "exists") {
+      chatBox.innerHTML += `
+        <div class="bot-msg">⚠️ This email is already subscribed</div>
+      `;
+    } else {
+      chatBox.innerHTML += `
+        <div class="bot-msg">
+          ✅ <b>Subscribed successfully!</b><br>
+          Use quick options below 👇
+        </div>
+      `;
+    }
+
+  } catch (err) {
+    chatBox.innerHTML += `
+      <div class="bot-msg">❌ Server error, try again later</div>
+    `;
+  }
+
+  // RESET BACK TO QUICK MODE
+  chatMode = "quick";
+  input.value = "";
+  input.disabled = true;
+  input.type = "text";
+  input.placeholder = "Choose a quick option below";
+
+  showPredefinedQuestions();
+  chatBox.scrollTop = chatBox.scrollHeight;
+  return;
+}
+
 
   /* ===============================
      NORMAL CHATBOT MODE (WITH IMAGE)
