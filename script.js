@@ -82,9 +82,13 @@ async function sendChat() {
   if (!msg) return;
 
   const chatBox = document.getElementById("chatMessages");
-  chatBox.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+
+  // USER MESSAGE
+  chatBox.innerHTML += `<div class="user-msg"><b>You:</b> ${msg}</div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
 
+  // FETCH BOT RESPONSE
   const res = await fetch("https://chatbot-newsletter.onrender.com/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -92,7 +96,22 @@ async function sendChat() {
   });
 
   const data = await res.json();
-  chatBox.innerHTML += `<div><b>Bot:</b> ${data.reply}</div>`;
+
+  // BOT MESSAGE (AUTO IMAGE DETECT)
+  let botHTML = `<div class="bot-msg"><b>Bot:</b><br>`;
+
+  if (
+    typeof data.reply === "string" &&
+    data.reply.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+  ) {
+    botHTML += `<img src="${data.reply}" class="chat-img" loading="lazy">`;
+  } else {
+    botHTML += data.reply;
+  }
+
+  botHTML += `</div>`;
+
+  chatBox.innerHTML += botHTML;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 

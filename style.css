@@ -682,3 +682,8 @@ body.chatbot-focus > *:not(#chatbot-container) {
   font-size: 24px;
   cursor: pointer;
 }
+.chat-img{
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 8px;
+}
