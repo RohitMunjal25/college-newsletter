@@ -9,7 +9,7 @@
 body {
   background:
     radial-gradient(circle at center, rgba(56,189,248,.15), transparent 45%),
-    url("./images/stars.jpg") center/cover no-repeat,
+    url("./images/darkimage.png") center/cover no-repeat,
     radial-gradient(circle at top, #0f172a, #020617);
   color: #e5e7eb;
   overflow-x: hidden;
@@ -28,11 +28,8 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(2,6,23,0.85),
-    rgba(2,6,23,0.55)
-  );
+  background:black; 
+  
 
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(56,189,248,0.25);
