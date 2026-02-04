@@ -255,7 +255,6 @@ function openAboutCollege() {
   const overlay = document.getElementById("aboutOverlay");
   const loader = document.getElementById("aboutLoader");
   const content = document.getElementById("aboutContent");
-  const videos = document.querySelectorAll(".about-video");
 
   overlay.style.display = "block";
   loader.style.display = "flex";
@@ -264,24 +263,35 @@ function openAboutCollege() {
   setTimeout(() => {
     loader.style.display = "none";
     content.style.display = "block";
-
-    // play all videos smoothly
-    videos.forEach(video => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    });
-
-  }, 2500); // loading time
+    // ❌ NO autoplay, NO play(), NOTHING
+  }, 2500);
 }
 
 function closeAbout() {
-  const overlay = document.getElementById("aboutOverlay");
-  const videos = document.querySelectorAll(".about-video");
+  stopIntroVideo(); // 💣 THIS WAS MISSING
 
+  const overlay = document.getElementById("aboutOverlay");
+
+  const videos = document.querySelectorAll("video");
   videos.forEach(video => {
     video.pause();
     video.currentTime = 0;
   });
 
   overlay.style.display = "none";
+}
+
+function stopIntroVideo() {
+  const introVideo = document.getElementById("introVideo");
+  const introOverlay = document.getElementById("introVideoOverlay");
+
+  if (introVideo) {
+    introVideo.pause();
+    introVideo.currentTime = 0;
+    introVideo.muted = true;
+  }
+
+  if (introOverlay) {
+    introOverlay.style.display = "none";
+  }
 }
