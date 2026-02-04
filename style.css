@@ -25,7 +25,6 @@ body {
   padding: 0 40px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   background:black; 
@@ -43,9 +42,7 @@ body {
 
 
 .nav-left {
-  display: flex;
-  align-items: center;
-  
+  flex:0 0 auto;
 }
 
 .logo {
@@ -55,12 +52,24 @@ body {
 
 .nav-title {
   font-weight: 500;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  white-space: nowrap;
+}
+.nav-right{
+  margin-left: auto;
 }
 
+
 .nav-right a {
-  margin-left: 18px;
   text-decoration: none;
   color: #c7d2fe;
+}
+.nav-center{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .nav-right .btn {
@@ -588,6 +597,10 @@ body.lock{
 }
 
 .welcome-content {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
   text-align: center;
   color: #fff;
   animation: fadeInUp 1.2s ease;
@@ -674,7 +687,6 @@ body.chatbot-focus > *:not(#chatbot-container) {
 #aboutLoader img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 /* CONTENT */
@@ -735,4 +747,19 @@ body.chatbot-focus > *:not(#chatbot-container) {
   max-width: 100%;
   border-radius: 12px;
   margin-top: 8px;
+}
+/* ===== ABOUT MULTI PERSON FIX ===== */
+#aboutContent {
+  overflow-y: auto;
+}
+
+.person-section {
+  margin-bottom: 80px;
+}
+
+.about-video {
+  width: 80%;
+  max-width: 900px;
+  border-radius: 16px;
+  box-shadow: 0 0 60px rgba(56,189,248,0.6);
 }
