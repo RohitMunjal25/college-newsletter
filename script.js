@@ -252,6 +252,7 @@ chatInput.addEventListener("keydown", function (e) {
 
 
 function openAboutCollege() {
+  history.pushState({ about: true }, "");
   const overlay = document.getElementById("aboutOverlay");
   const loader = document.getElementById("aboutLoader");
   const content = document.getElementById("aboutContent");
@@ -295,3 +296,104 @@ function stopIntroVideo() {
     introOverlay.style.display = "none";
   }
 }
+function openAboutDepartment() {
+  history.pushState({ about: true }, "");
+  changeAboutVideo("images/department.mp4");
+  updateAboutText({
+    name:"Dr. Arun Kumar",
+    role:"Head of department",
+    link:null,
+    showContact:false
+  });
+}
+
+function openAboutNewsletter() {
+  history.pushState({ about: true }, "");
+  changeAboutVideo("images/newsletter.mp4");
+  updateAboutText({
+    name:"Dr.Anusuiya",
+    role:"Editors Head",
+    link:null,
+    showContact:false
+  });
+}
+
+function openAboutPlacements() {
+  history.pushState({ about: true }, "");
+  changeAboutVideo("images/tpo video.mp4");
+  updateAboutText({
+    name:"Dr. Pradeep Kumar Sharma",
+    role:"Training & Placement Officer",
+    link:null,
+    showContact:false
+  });
+}
+
+function changeAboutVideo(videoSrc) {
+  const overlay = document.getElementById("aboutOverlay");
+  const loader = document.getElementById("aboutLoader");
+  const content = document.getElementById("aboutContent");
+
+  const video = document.getElementById("aboutVideo");
+  const source = video.querySelector("source");
+
+  overlay.style.display = "block";
+  loader.style.display = "flex";
+  content.style.display = "none";
+
+  // reset video
+  video.pause();
+  video.currentTime = 0;
+
+  source.src = videoSrc;
+  video.load();
+
+  setTimeout(() => {
+    loader.style.display = "none";
+    content.style.display = "block";
+  }, 2500);
+}
+function updateAboutText({ name, role, link, phone, email, showContact }) {
+  document.getElementById("aboutName").innerText = name;
+  document.getElementById("aboutRole").innerText = role;
+
+  // website
+  const linkEl = document.getElementById("aboutLink");
+  const visitLine = document.getElementById("aboutVisit");
+
+  if (link) {
+    visitLine.style.display = "block";
+    linkEl.href = link;
+    linkEl.innerText = link.replace("https://", "");
+  } else {
+    visitLine.style.display = "none";
+  }
+
+  // contact (ONLY when needed)
+  const contactEl = document.getElementById("aboutContact");
+
+  if (showContact) {
+    contactEl.style.display = "block";
+    contactEl.innerHTML = `📞 ${phone} <br> Email : ${email}`;
+  } else {
+    contactEl.style.display = "none";
+    contactEl.innerHTML = "";
+  }
+}
+const sideButtons = document.querySelectorAll(".side-actions");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 120) {
+    sideButtons.forEach(btn => btn.classList.add("hide"));
+  } else {
+    sideButtons.forEach(btn => btn.classList.remove("hide"));
+  }
+});
+// Handle browser back button for About overlay
+window.addEventListener("popstate", function () {
+  const overlay = document.getElementById("aboutOverlay");
+
+  if (overlay && overlay.style.display === "block") {
+    closeAbout();   // sirf overlay band hoga
+  }
+});

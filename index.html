@@ -17,17 +17,14 @@
     <img src="./images/black logo.png" class="logo" alt="College Logo">
     </div>
     <div class="nav-center">
-      <span class="nav-title">Welcome to Newsletter by Department of C.S.E</span></br>
-      <span>Volume-1</span>
+      <span class="nav-title">Department of C.S.E Newsletter</span></br>
+     
+    </div>
+    <div class="nav-right">
+       <span>Volume-1</span>
       <span>Issue-12</span> 
     </div>
-
-  <div class="nav-right">
-    <a href="javascript:void(0)" onclick="openAboutCollege()">About College</a>
-
-    <!-- <a href="images/C.S.E NEWSLETTER 2024-25.pdf" class="btn" download>Download PDF</a> -->
-  </div>
-</header>
+  </header>
 
 <!-- ===== HERO ===== -->
 <section class="hero"><br/>
@@ -81,7 +78,7 @@
     </div>
   </div>
 
-  <div class="action-card" id="downloadBtn" onclick="window.open('http://raw.githubusercontent.com/RohitMunjal25/college-newsletter/main/images/C.S.E%20NEWSLETTER%202024-25.pdf')">
+  <div class="action-card" id="downloadBtn" onclick="window.open('https://drive.google.com/uc?export=download&id=1Zw8_ZLQ8p1R4haD9VA2JlvS_yyTCVe3h')">
     <span class="icon">📄</span>
     <div class="text">
       <h4>Download PDF</h4>
@@ -97,14 +94,7 @@
     </div>
   </div>
 
-  <div class="action-card" id="aboutBtn">
-    <span class="icon">ℹ️</span>
-    <div class="text">
-      <h4>About Newsletter</h4>
-      <p>Know more details</p>
-    </div>
-  </div>
-
+  
 </div>
 <div id="chatbot-icon" onclick="openChatbot('normal')">
   🤖
@@ -137,9 +127,15 @@
 <div id="aboutOverlay">
 
   <!-- LOADER -->
-  <div id="aboutLoader">
-    <img src="images/loading gif.gif" alt="Loading">
-  </div>
+  <div id="aboutLoader" class="video-skeleton">
+  <div class="skeleton-video"></div>
+  <p style="color:#94a3b8;font-size:13px;">
+  Fetching video from server…
+</p>
+
+  <div class="skeleton-text"></div>
+  <div class="skeleton-text short"></div>
+</div>
 
   <!-- VIDEO SECTION -->
   <div id="aboutContent">
@@ -149,29 +145,17 @@
     </video>
 
     <div class="video-info">
-      <h2>Dr. S.K Sharma</h2>
-      <h4>Director – MITRC</h4>
+      <h2 id="aboutName">Dr. S.K Sharma</h2>
+      <h4 id="aboutRole">Director – MITRC</h4>
 
-      <p class="visit-line">
+      <p class="visit-line" id="aboutVisit">
         For more information visit us on  
-        <a href="https://mitrc.ac.in" target="_blank">www.mitrc.ac.in</a>
+        <a id="aboutLink" href="https://mitrc.ac.in" target="_blank">www.mitrc.ac.in</a>
       </p>
 
-      <p class="contact">
+      <p class="contact" id="aboutContact">
         📞 +91 7597676193/7597244813 </br>
           Email : hr@mitrc.ac.in 
-      </p>
-    </div> </br> </br>
-    <div class="video-info">
-      <video id="aboutVideo" controls playsinline >
-        <source src="images/tpo video.mp4"  type="video/mp4">
-      </video>
-      <h2>Dr. Pradeep Kumar Sharma</h2>
-      <h4>Training & Placement Officer</h4>
-      <p class="visit-line">
-        For more information visit us on
-        <a href="https://www.linkedin.com/in/tpo-mitrc-726b0a3a/" target="_blank">Linkedin</a>
-      </p> 
 
     </div>
     </div>
@@ -180,9 +164,29 @@
   </div>
 
 </div>
+<!-- ===== SIDE ACTION BUTTONS ===== -->
 
+<!-- LEFT SIDE -->
+<div class="side-actions left">
+  <div class="side-btn" onclick="openAboutCollege()">
+    <span>About College</span>
+  </div>
 
+  <div class="side-btn" onclick="openAboutPlacements()">
+    <span>About Placements</span>
+  </div>
+</div>
 
+<!-- RIGHT SIDE -->
+<div class="side-actions right">
+  <div class="side-btn" onclick="openAboutDepartment()">
+    <span>About our Department</span>
+  </div>
+
+  <div class="side-btn" onclick="openAboutNewsletter()">
+    <span>About Newsletter</span>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
