@@ -33,18 +33,18 @@
   <p>CSE Department • Session 2025–26</p>
 
   <div class="card-carousel">
-    <div class="card active"><img src="images/page1.jpg"><span>Cover Page</span></div>
-    <div class="card far-right"><img src="images/page1.jpg"><span>Editorial Team</span></div>
-    <div class="card far-right"><img src="images/page1.jpg"><span>Vision & Mission of Institute</span></div>
-    <div class="card far right"><img src="images/page1.jpg"><span>Vision & Mission of Department</span></div>
-    <div class="card far-right"><img src="images/page1.jpg"><span>Director's Desk & HOD's Desk</span></div>
-    <div class="card far-right"><img src="images/page1.jpg"><span>Seminar & Workshops</span></div>
-    <div class="card farright"><img src="images/page1.jpg"><span>Department Activities</span></div>
-    <div class="card far-right"><img src="images/page1.jpg"><span>Student Achievements</span></div>
-    <div class="card extreme-right"><img src="images/page1.jpg"><span>Placements</span></div>
-    <div class="card extreme-right"><img src="images/page1.jpg"><span>Extra Curricular Activities</span></div>
-    <div class="card extreme-right"><img src="images/page1.jpg"><span>Testimonials</span></div>
-    <div class="card extreme-right"><img src="images/page1.jpg"><span>Future Action Plans</span></div>
+    <div class="card active"><img src="images/stars.jpg"><span>Cover Page</span></div>
+    <div class="card far-right"><img src="impetus data/2.png"><span>Editorial Team</span></div>
+    <div class="card far-right"><img src="impetus data/3.png"><span>Institute Vision & Mission</span></div>
+    <div class="card far right"><img src="impetus data/4.png"><span>Department Vision & Mission</span></div>
+    <div class="card far-right"><img src="impetus data/5.png"><span>Director's Desk & HOD's Desk</span></div>
+    <div class="card far-right"><img src="impetus data/6.png"><span>Seminar & Workshops</span></div>
+    <div class="card farright"><img src="impetus data/7.png"><span>Department Activities</span></div>
+    <div class="card far-right"><img src="impetus data/8.png"><span>Student Achievements</span></div>
+    <div class="card extreme-right"><img src="impetus data/9.png"><span>Placements</span></div>
+    <div class="card extreme-right"><img src="impetus data/10.png"><span>Extra Curricular Activities</span></div>
+    <div class="card extreme-right"><img src="impetus data/11.png"><span>Testimonials</span></div>
+    <div class="card extreme-right"><img src="impetus data/12.png"><span>Future Action Plans</span></div>
   </div>
 
     <button class="enter-btn" id="enterNewsletter">
@@ -53,20 +53,6 @@
     <span>Interactive 3D Experience</span>
   </button>
 </section>
-<!-- ===== INTRO VIDEO OVERLAY ===== -->
-<div id="introVideoOverlay">
-  <video id="introVideo" autoplay>
-    <source src="images/intro.mp4" type="video/mp4">
-  </video>
-</div>
-
-<!-- ===== NOTEBOOK SECTION ===== -->
-<div id="notebook">
-  <div class="page">Editorial</div>
-  <div class="page">Department Message</div>
-  <div class="page">Events & Achievements</div>
-  <div class="page">Gallery</div>
-</div>
 
 <!-- ===== BOTTOM ACTION BUTTONS ===== -->
 <div class="bottom-actions">
@@ -114,14 +100,6 @@
   <div class="chat-input">
     <input type="text" id="chatInput" placeholder="Ask something..." />
     <button onclick="sendChat()">Send</button>
-  </div>
-</div>
-<!-- ===== WELCOME OVERLAY ===== -->
-<div id="welcome-overlay">
-  <div class="welcome-content">
-    <h1>Welcome to</h1>
-    <h2>CSE Interactive Newsletter 2025–26</h2>
-    <p>Loading immersive experience…</p>
   </div>
 </div>
 <!-- ===== ABOUT COLLEGE OVERLAY ===== -->
@@ -184,6 +162,52 @@
   <div class="side-btn" onclick="openAboutNewsletter()">
     <span>About Newsletter</span>
   </div>
+</div>
+
+<div id="cinematicOverlay">
+  <div class="cinematic-content" id="cinematicContent">
+    <h1>Welcome to CSE Newsletter</h1>
+    <h2>2025 – 26</h2>
+    <p>Loading immersive experience</p>
+    <div class="progress-wrap">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+
+  <video id="introVideo" src="pages of newsletter/Impetus.mp4" muted playsinline style="display:none;"></video>
+
+  <div id="newsletterFrame" class="newsletter-3d-frame">
+     <img src="" alt="Newsletter Page 1">
+  </div>
+</div>
+
+<div id="bookContainer" class="stack-container">
+  
+  <button class="arrow-btn arrow-left" onclick="prevCard()">&#10094;</button>
+
+  <div class="card-stack" id="stackWrapper">
+    
+    <div class="stack-card" style="z-index: 12;"><img src="images/stars.jpg"></div>
+    <div class="stack-card" style="z-index: 11;"><img src="impetus data/2.png"></div>
+    <div class="stack-card" style="z-index: 10;"><img src="impetus data/3.png"></div>
+    <div class="stack-card" style="z-index: 9;"><img src="impetus data/4.png"></div>
+    <div class="stack-card" style="z-index: 8;"><img src="impetus data/5.png"></div>
+    <div class="stack-card" style="z-index: 7;"><img src="impetus data/6.png"></div>
+    <div class="stack-card" style="z-index: 6;"><img src="impetus data/7.png"></div>
+    <div class="stack-card" style="z-index: 5;"><img src="impetus data/8.png"></div>
+    <div class="stack-card" style="z-index: 4;"><img src="impetus data/9.png"></div>
+    <div class="stack-card" style="z-index: 3;"><img src="impetus data/10.png"></div>
+    <div class="stack-card" style="z-index: 2;"><img src="impetus data/11.png"></div>
+    <div class="stack-card" style="z-index: 1;"><img src="impetus data/12.png"></div>
+
+  </div>
+
+  <button class="arrow-btn arrow-right" onclick="nextCard()">&#10095;</button>
+  
+  <div class="page-counter">
+    PAGE <span id="currentCardNum">1</span> / 12
+  </div>
+
 </div>
 <script src="script.js"></script>
 </body>

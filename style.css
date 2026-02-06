@@ -218,22 +218,74 @@ body {
 
 /* ===== CTA BUTTON ===== */
 .enter-btn {
-  margin-top: 30px;
-  padding: 18px 44px;
-  border-radius: 40px;
-  border: none;
-  background: linear-gradient(135deg,#38bdf8,#2563eb);
-  color: white;
-  font-size: 1.05rem;
-  box-shadow: 0 0 40px rgba(56,189,248,.7);
+  margin-top: 32px;
+  padding: 18px 52px;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: linear-gradient(
+    135deg,
+    rgba(56,189,248,0.25),
+    rgba(19,21,26,0.85)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.5),
+    inset 0 0 0 rgba(255,255,255,0);
+
   cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* subtle light sweep */
+.enter-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.enter-btn:hover::before {
+  transform: translateX(100%);
+}
+
+/* hover effect */
+.enter-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 18px 45px rgba(56,189,248,0.35),
+    inset 0 0 25px rgba(56,189,248,0.15);
+}
+
+/* active / click */
+.enter-btn:active {
+  transform: scale(0.98);
+}
+
+/* subtitle */
 .enter-btn span {
   display: block;
-  font-size: .8rem;
-  opacity: .8;
+  font-size: 0.78rem;
+  margin-top: 4px;
+  opacity: 0.75;
+  letter-spacing: 0.4px;
 }
+
 
 @media (max-width: 768px) {
 
@@ -556,104 +608,6 @@ body {
 .quick-questions button:hover {
   background: rgba(99,102,241,0.45);
   transform: translateY(-2px);
-}
-/* ===== INTRO VIDEO OVERLAY ===== */
-#introVideoOverlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 99998;
-
-  display: none;
-}
-
-#introVideoOverlay video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/* ===== NOTEBOOK SECTION ===== */
-#notebook {
-  position: fixed;
-  inset: 0;
-  background: #f5f1e6;
-  z-index: 99997;
-
-  display: none;
-  justify-content: center;
-  align-items: center;
-  perspective: 1600px;
-}
-
-/* PAGE */
-#notebook .page {
-  width: 340px;
-  height: 460px;
-  background: linear-gradient(#fffdf4, #f9f6ec);
-  margin: 6px;
-  padding: 22px;
-
-  border-radius: 6px;
-  box-shadow:
-    inset 0 0 12px rgba(0,0,0,0.08),
-    0 20px 40px rgba(0,0,0,0.35);
-
-  transform-origin: left;
-  transition: transform 1s ease;
-  cursor: pointer;
-
-  font-weight: 600;
-  color: #1e293b;
-}
-body.lock{
-  overflow: hidden;
-}
-/* ===== WELCOME OVERLAY ===== */
-
-#welcome-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-}
-
-#welcome-overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.welcome-content {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  text-align: center;
-  color: #fff;
-  animation: fadeInUp 1.2s ease;
-}
-
-.welcome-content h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
-
-.welcome-content h2 {
-  font-size: 1.4rem;
-  color: #38bdf8;
-  margin-bottom: 10px;
-}
-
-.welcome-content p {
-  font-size: 0.9rem;
-  color: #94a3b8;
-  letter-spacing: 1px;
 }
 
 @keyframes fadeInUp {
@@ -1019,13 +973,6 @@ html, body {
     min-width: 0;
     justify-content: center;
     font-size: 13px;
-  }
-}
-@media (max-width: 768px) {
-  .side-actions.hide {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: none !important;
   }
 }
 @media (max-width: 768px) {
@@ -1418,4 +1365,576 @@ html, body {
   .hero h1:not(.mobile-hero-title) {
     display: none !important;
   }
+}
+/* VIDEO */
+#introVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* SLIDER */
+.cinematic-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cinematic-content {
+  position: relative;
+  z-index: 2;
+}
+
+#sliderWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+}
+
+.slider {
+  width: 70%;
+  height: 70%;
+  display: flex;
+  perspective: 1200px;
+}
+
+.slide {
+  min-width: 100%;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: white;
+  transform: scale(0.85) rotateY(15deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.slide.active {
+  transform: scale(1) rotateY(0);
+  opacity: 1;
+}
+#introVideo.freeze {
+  filter: brightness(0.7) blur(1px);
+}
+
+
+/* NAV BUTTONS */
+.nav-btn {
+  position: absolute;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 3rem;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.left { left: 5%; }
+.right { right: 5%; }
+.cinematic-content.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.6s ease;
+}
+.book-container {
+  display: none; /* Initially hidden */
+  perspective: 1500px;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.book {
+  position: relative;
+  width: 400px; /* Mobile ke liye adjust karein */
+  height: 550px;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.book-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  cursor: pointer;
+}
+
+.page-front, .page-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+}
+
+.page-back {
+  transform: rotateY(180deg);
+  background: #1e293b;
+}
+
+.book-page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.book-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Progress Bar Animation */
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+  animation: loadBar 3s ease forwards;
+}
+
+@keyframes loadBar {
+  to { width: 100%; }
+}
+
+/* Video Zoom-In Transition */
+/* Video ab A4 Frame mein dikhega */
+#introVideo {
+  position: absolute;
+  inset: 0;
+  margin: auto; /* Video ko center karne ke liye */
+  
+  /* A4 Frame Look */
+  width: 100%;
+  height: 85%; /* Screen se thoda chota taaki black border dikhe */
+  max-width: 600px; /* Mobile/Desktop par jyada chauda na ho */
+  
+  object-fit: contain; /* Video ka size kharab nahi hoga (A4 rahega) */
+  
+  border-radius: 5px; /* Thode corners smooth */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 1); /* Piche gehra shadow */
+  
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
+  z-index: 2;
+  display: none;
+}
+
+/* Newsletter Page jo Video se nikal ke aayega */
+.newsletter-3d-frame {
+  position: absolute;
+  width: 60%; /* Initially chota rakhenge zoom feel ke liye */
+  max-width: 800px;
+  opacity: 0;
+  transform: scale(0.5) translateZ(-500px);
+  transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 3;
+}
+
+.newsletter-3d-frame.show {
+  opacity: 1;
+  transform: scale(1) translateZ(0);
+}
+
+.newsletter-3d-frame img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+}
+/* ===== CINEMATIC OVERLAY FIX (Is code ko CSS ke end mein paste karein) ===== */
+#cinematicOverlay {
+  position: fixed;   /* Screen ke upar fix karega */
+  inset: 0;          /* Poori screen cover karega */
+  width: 100%;
+  height: 100%;
+  background: black; /* Background black karega */
+  z-index: 99999;    /* Sabse upar layega */
+  
+  display: none;     /* <--- YE IMPORTANT HAI (Pehle chupayega) */
+  
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Jab button dabega tab ye class add hogi aur overlay dikhega */
+#cinematicOverlay.active {
+  display: flex;
+}
+/* ===== CINEMATIC OVERLAY (PREMIUM LOOK) ===== */
+#cinematicOverlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Deep Dark Cinematic Background */
+  background: radial-gradient(circle at center, #0f172a 0%, #000000 100%);
+  z-index: 99999;
+  
+  display: none; /* Initially Hidden */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#cinematicOverlay.active {
+  display: flex;
+}
+
+/* Content Container */
+.cinematic-content {
+  position: relative;
+  z-index: 10;
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Main Title */
+.cinematic-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  /* Text Shadow for depth */
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+/* Year / Subtitle */
+.cinematic-content h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #38bdf8; /* Cyan Blue */
+  letter-spacing: 8px;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Decorative Line under Year */
+.cinematic-content h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #38bdf8;
+  letter-spacing: 8px;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+  /* Line hatane ke liye ::after wala code delete kar diya hai */
+}
+
+/* Loading Text */
+.cinematic-content p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  animation: blinkText 1.5s infinite alternate;
+}
+
+/* ===== PROGRESS BAR (THE SHANDAR PART) ===== */
+.progress-wrap {
+  width: 300px; /* Width of the bar */
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+  border-radius: 10px;
+  
+  /* Neon Glow Effect */
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+  
+  /* Animation (3 seconds match with JS) */
+  animation: loadBar 3s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Animations */
+@keyframes loadBar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blinkText {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .cinematic-content h1 { font-size: 2rem; }
+  .cinematic-content h2 { font-size: 1.5rem; letter-spacing: 4px; }
+  .progress-wrap { width: 240px; }
+}
+/* ===== BLACK IMMERSIVE MODE & ARROWS (Paste at the bottom of style.css) ===== */
+
+/* 1. Black Background Fix */
+/* ===== FINAL FIX: FULL SCREEN BLACK OVERLAY & CINEMATIC ===== */
+
+#bookContainer {
+  position: fixed !important;  /* Screen par chipka rahega */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000 !important; /* Sabse upar */
+  
+  background: #000 !important; /* Pure Black Base */
+  background: radial-gradient(circle at center, #111827 0%, #000000 80%) !important; /* Cinematic Spotlight */
+  
+  /* Flexbox centering */
+  display: none; /* JS isko flex karega */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Book Animation: Jab book screen par aaye */
+#bookContainer.fade-in .book {
+  animation: bookEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes bookEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Shine Effect Fix */
+.book {
+  box-shadow: 0 0 100px rgba(56, 189, 248, 0.15); /* Soft Blue Glow */
+}
+/* ===== SIDE ARROWS STYLE ===== */
+.arrow-btn {
+  position: absolute; /* Ye zaroori hai side me lane ke liye */
+  top: 50%;
+  transform: translateY(-50%);
+  
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  color: #38bdf8; /* Neon Blue */
+  border: 2px solid rgba(56, 189, 248, 0.5);
+  
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  
+  cursor: pointer;
+  z-index: 100001; /* Book ke upar dikhe */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.arrow-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 40px rgba(56, 189, 248, 0.6);
+}
+
+/* Positioning */
+.arrow-left { left: 40px; }
+.arrow-right { right: 40px; }
+
+/* Mobile par thoda pass */
+@media (max-width: 768px) {
+  .arrow-left { left: 10px; }
+  .arrow-right { right: 10px; }
+  .arrow-btn { width: 45px; height: 45px; font-size: 1.5rem; }
+}
+/* ===== DESIGN UPGRADE: FLOATING & REALISM ===== */
+
+/* 1. Floating Animation (Book feels alive) */
+@keyframes floatBook {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.01); }
+}
+
+.book {
+  /* Animation connect kar rahe hain */
+  animation: floatBook 6s ease-in-out infinite;
+  
+  /* Neon Blue Edge Glow (Premium Look) */
+  box-shadow: 
+    0 0 30px rgba(56, 189, 248, 0.15), /* Blue Glow */
+    0 30px 60px rgba(0,0,0,0.9); /* Deep Shadow below */
+}
+
+/* 2. Spine Fold Effect (Beech mein shadow) */
+/* Ye har page ke left side par ek halki shadow layega jisse 'Book Fold' lagega */
+.page-front::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 25px; /* Fold area */
+  background: linear-gradient(to right, rgba(0,0,0,0.25), transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* 3. Glossy Paper Look (Optional: Agar page shiny chahiye) */
+.book-page img {
+  filter: contrast(1.05) saturate(1.05); /* Colors thode pop honge */
+}
+
+/* 4. Page Counter Style */
+.page-counter {
+  position: absolute;
+  bottom: 30px; /* Book ke neeche */
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 8px 20px;
+  border-radius: 20px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+  z-index: 100002;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+.page-counter span {
+  color: #38bdf8; /* Current page blue color */
+  font-weight: 600;
+}
+/* ===== STACK CONTAINER ===== */
+.stack-container {
+  display: none; /* Initially hidden, JS will show it */
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at center, #1e293b 0%, #000 90%);
+  z-index: 100000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* 3D effect ke liye zaroori */
+}
+
+/* Jab active ho (JS se) */
+.stack-container.active {
+  display: flex;
+}
+
+.card-stack {
+  position: relative;
+  width: 400px;  /* Desktop size */
+  height: 560px; /* A4 Ratio approx */
+  transform-style: preserve-3d;
+}
+
+/* Individual Card Styling */
+.stack-card {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  
+  /* Transition for smooth movement */
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s;
+  
+  /* Thoda sa tilt taaki depth dikhe */
+  transform-origin: bottom center;
+}
+
+.stack-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ===== ANIMATION CLASSES (JS se add hongi) ===== */
+
+/* Jab card Left me udd jaye (Next dabane par) */
+.stack-card.fly-left {
+  transform: translateX(-150%) rotate(-15deg) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .card-stack {
+    width: 320px;
+    height: 450px;
+  }
+}
+/* =========================================
+   🔥 FINAL FIX: FORCE DISPLAY & BACKGROUND
+   (Isse sabse end mein paste karein)
+========================================= */
+
+#bookContainer {
+  /* Force Full Screen & Dark Background */
+  position: fixed !important;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  
+  /* Dark Gradient taaki White Screen na aaye */
+  background: radial-gradient(circle at center, #1e293b 0%, #000 90%) !important;
+  
+  /* Z-Index High */
+  z-index: 100000 !important;
+  
+  /* Default hidden */
+  display: none;
+  
+  /* Centering */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+/* Jab JS 'active' class lagayega tab dikhega */
+#bookContainer.active {
+  display: flex !important;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
