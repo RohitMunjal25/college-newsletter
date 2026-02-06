@@ -16,6 +16,7 @@ function updateCards() {
     else if (diff === -2) card.classList.add("far-left");
   });
 }
+
 if(cards.length > 0) {
     updateCards();
     setInterval(() => {
@@ -25,7 +26,7 @@ if(cards.length > 0) {
 }
 
 /* ===============================
-   2. CHATBOT LOGIC
+   2. CHATBOT LOGIC (API RESTORED ✅)
 ================================ */
 let welcomeShown = false;
 let chatMode = "quick";
@@ -79,18 +80,35 @@ async function sendChat() {
 
   const chatBox = document.getElementById("chatMessages");
 
+  // --- EMAIL SUBSCRIPTION MODE ---
   if (chatMode === "email") {
-    // ... (Email Logic Same as before) ...
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(msg)) {
       chatBox.innerHTML += `<div class="bot-msg">❌ Enter a valid email address</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
       return;
     }
+
     chatBox.innerHTML += `<div class="user-msg">${msg}</div>`;
-    // Simulated API call for brevity in fix
-    chatBox.innerHTML += `<div class="bot-msg">✅ <b>Subscribed successfully!</b></div>`;
-    
+
+    try {
+      // 🔥 REAL API CALL RESTORED
+      const res = await fetch("https://chatbot-newsletter.onrender.com/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: msg })
+      });
+      const data = await res.json();
+
+      if (data.status === "exists") {
+        chatBox.innerHTML += `<div class="bot-msg">⚠️ This email is already subscribed</div>`;
+      } else {
+        chatBox.innerHTML += `<div class="bot-msg">✅ <b>Subscribed successfully!</b></div>`;
+      }
+    } catch (err) {
+      chatBox.innerHTML += `<div class="bot-msg">❌ Server error, try again later</div>`;
+    }
+
     chatMode = "quick";
     input.value = "";
     input.disabled = true;
@@ -100,12 +118,39 @@ async function sendChat() {
     return;
   }
 
+  // --- NORMAL CHAT MODE ---
   chatBox.innerHTML += `<div class="user-msg"><b>You:</b> ${msg}</div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
 
-  // Simulating Chat Response for UI (Replace with real Fetch if needed)
-  chatBox.innerHTML += `<div class="bot-msg">⚠️ Demo Mode: Server connect code here.</div>`;
+  try {
+    // 🔥 REAL API CALL RESTORED
+    const res = await fetch("https://chatbot-newsletter.onrender.com/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: msg })
+    });
+
+    const data = await res.json();
+    
+    let botHTML = `<div class="bot-msg"><b>Bot:</b><br>`;
+    
+    if (typeof data.reply === "object" && data.reply !== null) {
+       if (data.reply.text) botHTML += `<p>${data.reply.text}</p>`;
+       if (data.reply.image) botHTML += `<img src="${data.reply.image}" class="chat-img" loading="lazy">`;
+    } else if (typeof data.reply === "string" && data.reply.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+       botHTML += `<img src="${data.reply}" class="chat-img" loading="lazy">`;
+    } else {
+       botHTML += data.reply;
+    }
+    botHTML += `</div>`;
+    
+    chatBox.innerHTML += botHTML;
+
+  } catch (error) {
+    chatBox.innerHTML += `<div class="bot-msg">⚠️ Server is waking up (Free Tier). Please wait 30s and try again.</div>`;
+  }
+  
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -129,19 +174,32 @@ function sendQuick(text) {
     input.type = "email";
     input.placeholder = "Enter email 📧";
     input.focus();
+    
     const chatBox = document.getElementById("chatMessages");
     chatBox.innerHTML += `<div class="bot-msg">⭐ Please enter your email address 👇</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
     return;
   }
+  
   const input = document.getElementById("chatInput");
   input.disabled = false;
   input.value = text;
   sendChat();
 }
 
+// Enable Enter Key
+const chatInputEl = document.getElementById("chatInput");
+if(chatInputEl) {
+    chatInputEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!chatInputEl.disabled) sendChat();
+      }
+    });
+}
+
 /* ===============================
-   3. ABOUT OVERLAY LOGIC
+   3. ABOUT OVERLAY LOGIC (Specific Videos)
 ================================ */
 function changeAboutVideo(videoSrc) {
   history.pushState({ mode: 'about' }, "", "#about");
@@ -168,19 +226,22 @@ function changeAboutVideo(videoSrc) {
   }, 1500);
 }
 
-// ... (Open About Functions Same as before) ...
+// 1. College (Director)
 function openAboutCollege() {
   updateAboutText({ name: "Dr. S.K Sharma", role: "Director – MITRC", link: "https://mitrc.ac.in", showContact: true });
   changeAboutVideo("images/director sir video.mp4");
 }
+// 2. Department (HOD)
 function openAboutDepartment() { 
   updateAboutText({ name: "Dr. Arun Kumar", role: "Head of Department", link: null, showContact: false });
   changeAboutVideo("images/department.mp4");
 }
+// 3. Placements (TPO)
 function openAboutPlacements() { 
   updateAboutText({ name: "Dr. Pradeep Kumar Sharma", role: "Training & Placement Officer", link: null, showContact: false });
   changeAboutVideo("images/tpo video.mp4");
 }
+// 4. Newsletter (Editor)
 function openAboutNewsletter() {
   updateAboutText({ name: "Dr. R. Anusuya", role: "Editors Head", link: null, showContact: false });
   changeAboutVideo("images/newsletter.mp4");
@@ -195,12 +256,14 @@ function updateAboutText({ name, role, link, showContact }) {
 
     if(nameEl) nameEl.innerText = name;
     if(roleEl) roleEl.innerText = role;
+
     if (link && visitLine && linkEl) {
       visitLine.style.display = "block";
       linkEl.href = link;
     } else if (visitLine) {
       visitLine.style.display = "none";
     }
+
     if (showContact && contactEl) {
       contactEl.style.display = "block";
       contactEl.innerHTML = `📞 +91 7597676193/7597244813 <br> Email : hr@mitrc.ac.in`;
@@ -228,77 +291,35 @@ window.addEventListener("scroll", () => {
 });
 
 /* ===============================
-   5. NEW STACK LOGIC (Replaces Book Logic)
-================================ */
-let stackIndex = 0; 
-const totalStackCards = 12; // Total pages
-const stackCards = document.querySelectorAll('.stack-card'); 
-const stackCounter = document.getElementById('currentCardNum');
-
-// NEXT Button Logic
-function nextCard() {
-  if (stackIndex < totalStackCards - 1) {
-    // Current card ko uda do
-    if(stackCards[stackIndex]) {
-        stackCards[stackIndex].classList.add('fly-left');
-    }
-    stackIndex++;
-    updateStackCounter();
-  }
-}
-
-// PREV Button Logic
-function prevCard() {
-  if (stackIndex > 0) {
-    stackIndex--;
-    // Card wapas le aao
-    if(stackCards[stackIndex]) {
-        stackCards[stackIndex].classList.remove('fly-left');
-    }
-    updateStackCounter();
-  }
-}
-
-// Update Counter
-function updateStackCounter() {
-  if(stackCounter) {
-      stackCounter.innerText = stackIndex + 1;
-  }
-}
-
-/* ===============================
-   6. CINEMATIC INTRO & TRANSITIONS
+   5. CINEMATIC INTRO & BOOK LOGIC
 ================================ */
 const enterBtn = document.getElementById("enterNewsletter");
 const cinematicOverlay = document.getElementById("cinematicOverlay");
 const introVideo = document.getElementById("introVideo");
 const cinematicContent = document.getElementById("cinematicContent");
-const bookContainer = document.getElementById("bookContainer"); 
+const bookContainer = document.getElementById("bookContainer");
+const newsletterFrame = document.getElementById("newsletterFrame");
 
-// A. ENTER BUTTON CLICK
+// A. ENTER BUTTON
 if(enterBtn) {
   enterBtn.addEventListener("click", () => {
     history.pushState({ mode: 'immersive' }, "", "#immersive");
 
-    // Hide Homepage Elements
+    // Hide Homepage
     document.querySelector('.hero').style.display = 'none'; 
     document.querySelector('.bottom-actions').style.display = 'none';
 
-    // Show Cinematic Overlay
     cinematicOverlay.style.display = "flex";
     cinematicOverlay.classList.add("active");
 
-    // Show Text Content First
     cinematicContent.style.opacity = "1";
     cinematicContent.style.display = "block";
-    
     if(introVideo) {
         introVideo.style.display = "none";
         introVideo.style.opacity = "1";
         introVideo.style.transform = "scale(1)";
     }
 
-    // 3 Seconds later -> Hide Text, Play Video
     setTimeout(() => {
       cinematicContent.style.opacity = "0";
       setTimeout(() => {
@@ -310,44 +331,36 @@ if(enterBtn) {
   });
 }
 
-// B. VIDEO END -> OPEN STACK
+// B. VIDEO END
 if(introVideo) {
   introVideo.addEventListener("ended", () => {
-    // Video Zoom Out Effect
     introVideo.style.transition = "all 1s ease";
     introVideo.style.transform = "scale(2.5)";
     introVideo.style.opacity = "0";
 
     setTimeout(() => {
-      // Hide Cinematic Overlay
       cinematicOverlay.style.display = "none";
-      
-      // SHOW STACK CONTAINER
-      if(bookContainer) {
-          bookContainer.classList.add('active'); // CSS display:flex karega
-          // Optional: Add entry animation class
-          bookContainer.classList.add('fade-in'); 
-      }
+      bookContainer.style.display = "flex";
+      bookContainer.classList.add('active'); // Important for visibility logic
+      if(newsletterFrame) newsletterFrame.style.display = "none";
     }, 1000);
   });
 }
 
-// C. GLOBAL BACK BUTTON (Fixes everything)
+// C. GLOBAL BACK BUTTON HANDLER
 window.addEventListener("popstate", function (event) {
+  
   const isCinematicOpen = cinematicOverlay && cinematicOverlay.style.display === "flex";
-  // Check if Stack is open
-  const isStackOpen = bookContainer && bookContainer.classList.contains("active");
-
-  if (isCinematicOpen || isStackOpen) {
+  const isBookOpen = bookContainer && bookContainer.style.display === "flex";
+  
+  if (isCinematicOpen || isBookOpen) {
     if(cinematicOverlay) cinematicOverlay.style.display = "none";
-    
-    // Close Stack
     if(bookContainer) {
-        bookContainer.classList.remove("active");
-        bookContainer.classList.remove("fade-in");
+        bookContainer.style.display = "none";
+        bookContainer.classList.remove('active');
     }
     
-    // Show Homepage again
+    // Show Homepage Back
     document.querySelector('.hero').style.display = 'flex'; 
     document.querySelector('.bottom-actions').style.display = 'flex';
 
@@ -357,27 +370,62 @@ window.addEventListener("popstate", function (event) {
     }
   }
 
-  // Close other overlays
   const aboutOverlay = document.getElementById("aboutOverlay");
-  if (aboutOverlay && aboutOverlay.style.display === "block") closeAbout();
+  if (aboutOverlay && aboutOverlay.style.display === "block") {
+    closeAbout();
+  }
 
   const chatbotContainer = document.getElementById("chatbot-container");
-  if (chatbotContainer && chatbotContainer.style.display === "flex") closeChatbot();
+  if (chatbotContainer && chatbotContainer.style.display === "flex") {
+    closeChatbot();
+  }
 });
 
 /* ===============================
-   7. TOUCH SWIPE LOGIC (UPDATED FOR STACK)
+   6. BOOK NAVIGATION (FLIPBOOK LOGIC)
+================================ */
+let currentBookPage = 0;
+const bookPages = document.querySelectorAll('.book-page');
+const pageDisplay = document.getElementById("currentPageDisplay");
+
+function updateCounter() {
+  if(pageDisplay) {
+    pageDisplay.innerText = currentBookPage + 1;
+  }
+}
+
+function nextPage() {
+  if (currentBookPage < bookPages.length) {
+    bookPages[currentBookPage].classList.add('flipped');
+    bookPages[currentBookPage].style.zIndex = currentBookPage + 1; 
+    currentBookPage++;
+    updateCounter();
+  }
+}
+
+function prevPage() {
+  if (currentBookPage > 0) {
+    currentBookPage--;
+    bookPages[currentBookPage].classList.remove('flipped');
+    bookPages[currentBookPage].style.zIndex = bookPages.length - currentBookPage; 
+    updateCounter();
+  }
+}
+
+/* ===============================
+   7. TOUCH SWIPE & KEYBOARD LOGIC
 ================================ */
 let touchStartX = 0;
 let touchEndX = 0;
-const stackArea = document.getElementById("bookContainer");
+const bookArea = document.getElementById("bookContainer");
 
-if (stackArea) {
-  stackArea.addEventListener("touchstart", (e) => {
+// Swipe Logic
+if (bookArea) {
+  bookArea.addEventListener("touchstart", (e) => {
     touchStartX = e.changedTouches[0].screenX;
   }, {passive: true});
 
-  stackArea.addEventListener("touchend", (e) => {
+  bookArea.addEventListener("touchend", (e) => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
   }, {passive: true});
@@ -386,26 +434,18 @@ if (stackArea) {
 function handleSwipe() {
   const threshold = 50;
   if (touchStartX - touchEndX > threshold) {
-    nextCard(); // Swipe Left -> Next Card
+    nextPage(); // Swipe Left -> Next
   }
   if (touchEndX - touchStartX > threshold) {
-    prevCard(); // Swipe Right -> Prev Card
+    prevPage(); // Swipe Right -> Prev
   }
 }
 
-/* ===============================
-   8. KEYBOARD NAVIGATION (UPDATED FOR STACK)
-================================ */
+// Keyboard Logic
 document.addEventListener("keydown", function(e) {
-  const bookContainer = document.getElementById("bookContainer");
-  
-  // Only work if stack is visible
-  if (bookContainer && bookContainer.classList.contains("active")) {
-    if (e.key === "ArrowRight") {
-      nextCard();
-    }
-    if (e.key === "ArrowLeft") {
-      prevCard();
-    }
+  // Only work if book is open
+  if (bookContainer && bookContainer.style.display === "flex") {
+    if (e.key === "ArrowRight") nextPage();
+    if (e.key === "ArrowLeft") prevPage();
   }
 });
