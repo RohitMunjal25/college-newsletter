@@ -33,7 +33,7 @@
   <p>CSE Department • Session 2025–26</p>
 
   <div class="card-carousel">
-    <div class="card active"><img src="images/stars.jpg"><span>Cover Page</span></div>
+    <div class="card active"><img src="impetus data/cover page.png"><span>Cover Page</span></div>
     <div class="card far-right"><img src="impetus data/2.png"><span>Editorial Team</span></div>
     <div class="card far-right"><img src="impetus data/3.png"><span>Institute Vision & Mission</span></div>
     <div class="card far right"><img src="impetus data/4.png"><span>Department Vision & Mission</span></div>
@@ -181,33 +181,50 @@
   </div>
 </div>
 
-<div id="bookContainer" class="stack-container">
+<div id="bookContainer" class="book-container">
   
-  <button class="arrow-btn arrow-left" onclick="prevCard()">&#10094;</button>
+  <button class="arrow-btn arrow-left" onclick="prevPage()">&#10094;</button>
 
-  <div class="card-stack" id="stackWrapper">
+  <div class="book" id="newsletterBook">
     
-    <div class="stack-card" style="z-index: 12;"><img src="images/stars.jpg"></div>
-    <div class="stack-card" style="z-index: 11;"><img src="impetus data/2.png"></div>
-    <div class="stack-card" style="z-index: 10;"><img src="impetus data/3.png"></div>
-    <div class="stack-card" style="z-index: 9;"><img src="impetus data/4.png"></div>
-    <div class="stack-card" style="z-index: 8;"><img src="impetus data/5.png"></div>
-    <div class="stack-card" style="z-index: 7;"><img src="impetus data/6.png"></div>
-    <div class="stack-card" style="z-index: 6;"><img src="impetus data/7.png"></div>
-    <div class="stack-card" style="z-index: 5;"><img src="impetus data/8.png"></div>
-    <div class="stack-card" style="z-index: 4;"><img src="impetus data/9.png"></div>
-    <div class="stack-card" style="z-index: 3;"><img src="impetus data/10.png"></div>
-    <div class="stack-card" style="z-index: 2;"><img src="impetus data/11.png"></div>
-    <div class="stack-card" style="z-index: 1;"><img src="impetus data/12.png"></div>
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/cover page.png" alt="Cover"></div>
+      <div class="page-back" style="background: #111;"></div> </div>
+    
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/2.png" alt="Editorial"></div>
+      <div class="page-back"><img src="impetus data/3.png" alt="Inst Vision"></div>
+    </div>
+
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/4.png" alt="Dept Vision"></div>
+      <div class="page-back"><img src="impetus data/5.png" alt="Director Desk"></div>
+    </div>
+
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/6.png" alt="Seminar"></div>
+      <div class="page-back"><img src="impetus data/7.png" alt="Activities"></div>
+    </div>
+
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/8.png" alt="Achievements"></div>
+      <div class="page-back"><img src="impetus data/9.png" alt="Placements"></div>
+    </div>
+
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/10.png" alt="Extra Curricular"></div>
+      <div class="page-back"><img src="impetus data/11.png" alt="Testimonials"></div>
+    </div>
+
+    <div class="book-page">
+      <div class="page-front"><img src="impetus data/12.png" alt="Future Plans"></div>
+      <div class="page-back" style="background: #111;"></div> </div>
 
   </div>
 
-  <button class="arrow-btn arrow-right" onclick="nextCard()">&#10095;</button>
-  
-  <div class="page-counter">
-    PAGE <span id="currentCardNum">1</span> / 12
-  </div>
+  <button class="arrow-btn arrow-right" onclick="nextPage()">&#10095;</button>
 
+  <div class="page-counter">PAGE <span id="currentPageDisplay">1</span> / 7</div>
 </div>
 <script src="script.js"></script>
 </body>

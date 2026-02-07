@@ -332,6 +332,7 @@ if(enterBtn) {
 }
 
 // B. VIDEO END
+// B. VIDEO END
 if(introVideo) {
   introVideo.addEventListener("ended", () => {
     introVideo.style.transition = "all 1s ease";
@@ -341,7 +342,11 @@ if(introVideo) {
     setTimeout(() => {
       cinematicOverlay.style.display = "none";
       bookContainer.style.display = "flex";
-      bookContainer.classList.add('active'); // Important for visibility logic
+      
+      // 🔥 IMPORTANT FIX: Book dikhane se pehle usse reset karo
+      resetBook(); 
+      
+      bookContainer.classList.add('active'); 
       if(newsletterFrame) newsletterFrame.style.display = "none";
     }, 1000);
   });
@@ -380,13 +385,29 @@ window.addEventListener("popstate", function (event) {
     closeChatbot();
   }
 });
-
 /* ===============================
-   6. BOOK NAVIGATION (FLIPBOOK LOGIC)
+   6. BOOK NAVIGATION (FIXED & RESET LOGIC)
 ================================ */
 let currentBookPage = 0;
 const bookPages = document.querySelectorAll('.book-page');
 const pageDisplay = document.getElementById("currentPageDisplay");
+
+// 🔥 NEW FUNCTION: Book ko hamesha Page 1 se start karne ke liye
+function resetBook() {
+  currentBookPage = 0; // Counter 0 par set karo
+  
+  bookPages.forEach((page, index) => {
+    page.classList.remove('flipped'); // Saare page wapas palto (band karo)
+    
+    // Z-Index sahi karo (Pehla page sabse upar)
+    page.style.zIndex = bookPages.length - index; 
+  });
+  
+  updateCounter();
+}
+
+// Window load hote hi setup karo
+window.addEventListener('load', resetBook);
 
 function updateCounter() {
   if(pageDisplay) {
@@ -396,8 +417,9 @@ function updateCounter() {
 
 function nextPage() {
   if (currentBookPage < bookPages.length) {
-    bookPages[currentBookPage].classList.add('flipped');
-    bookPages[currentBookPage].style.zIndex = currentBookPage + 1; 
+    const page = bookPages[currentBookPage];
+    page.classList.add('flipped');
+    page.style.zIndex = currentBookPage + 1; 
     currentBookPage++;
     updateCounter();
   }
@@ -406,12 +428,12 @@ function nextPage() {
 function prevPage() {
   if (currentBookPage > 0) {
     currentBookPage--;
-    bookPages[currentBookPage].classList.remove('flipped');
-    bookPages[currentBookPage].style.zIndex = bookPages.length - currentBookPage; 
+    const page = bookPages[currentBookPage];
+    page.classList.remove('flipped');
+    page.style.zIndex = bookPages.length - currentBookPage;
     updateCounter();
   }
 }
-
 /* ===============================
    7. TOUCH SWIPE & KEYBOARD LOGIC
 ================================ */
