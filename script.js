@@ -26,7 +26,7 @@ if(cards.length > 0) {
 }
 
 /* ===============================
-   2. CHATBOT LOGIC (API RESTORED ✅)
+   2. CHATBOT LOGIC
 ================================ */
 let welcomeShown = false;
 let chatMode = "quick";
@@ -87,12 +87,12 @@ async function sendChat() {
       chatBox.innerHTML += `<div class="bot-msg">❌ Enter a valid email address</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
       return;
+
     }
 
     chatBox.innerHTML += `<div class="user-msg">${msg}</div>`;
 
     try {
-      // 🔥 REAL API CALL RESTORED
       const res = await fetch("https://chatbot-newsletter.onrender.com/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -114,6 +114,8 @@ async function sendChat() {
     input.disabled = true;
     input.type = "text";
     input.placeholder = "Choose a quick option below";
+    input.blur();
+    document.activeElement.blur();
     showPredefinedQuestions();
     return;
   }
@@ -124,7 +126,6 @@ async function sendChat() {
   input.value = "";
 
   try {
-    // 🔥 REAL API CALL RESTORED
     const res = await fetch("https://chatbot-newsletter.onrender.com/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -167,27 +168,31 @@ function showPredefinedQuestions() {
 }
 
 function sendQuick(text) {
+
+  // 🔒 input ko hamesha locked rakho
+  const input = document.getElementById("chatInput");
+  input.disabled = true;
+  input.blur();
+
+  // ⭐ Subscribe special case
   if (text.toLowerCase().includes("subscribe")) {
     chatMode = "email";
-    const input = document.getElementById("chatInput");
     input.disabled = false;
     input.type = "email";
     input.placeholder = "Enter email 📧";
-    input.focus();
-    
+
+    setTimeout(() => input.focus(), 100); // keyboard sirf yahin
     const chatBox = document.getElementById("chatMessages");
     chatBox.innerHTML += `<div class="bot-msg">⭐ Please enter your email address 👇</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
     return;
   }
-  
-  const input = document.getElementById("chatInput");
-  input.disabled = false;
+
+  // baaki sab quick replies
   input.value = text;
   sendChat();
 }
 
-// Enable Enter Key
 const chatInputEl = document.getElementById("chatInput");
 if(chatInputEl) {
     chatInputEl.addEventListener("keydown", function (e) {
@@ -199,54 +204,84 @@ if(chatInputEl) {
 }
 
 /* ===============================
-   3. ABOUT OVERLAY LOGIC (Specific Videos)
+   3. ABOUT OVERLAY LOGIC (YouTube Only)
 ================================ */
-function changeAboutVideo(videoSrc) {
+
+function changeAboutVideo(videoUrl) {
   history.pushState({ mode: 'about' }, "", "#about");
   const overlay = document.getElementById("aboutOverlay");
   const loader = document.getElementById("aboutLoader");
   const content = document.getElementById("aboutContent");
-  const video = document.getElementById("aboutVideo");
+  const iframe = document.getElementById("aboutVideo");
 
   if (!overlay) return;
 
+  // Show Overlay & Loader
   overlay.style.display = "block";
   if(loader) loader.style.display = "flex";
   if(content) content.style.display = "none";
 
-  if (video) {
-    video.pause();
-    video.src = videoSrc;
-    video.load();
+  // Set YouTube Source
+  if (iframe && videoUrl) {
+    // Adding autoplay=1 ensures video plays when loaded
+    iframe.src = videoUrl + "?autoplay=1&rel=0"; 
   }
 
+  // Fake Loading Effect (1.5s)
   setTimeout(() => {
     if(loader) loader.style.display = "none";
     if(content) content.style.display = "block";
   }, 1500);
 }
 
-// 1. College (Director)
+// --- CONFIGURATION: Replace IDs below with your Real YouTube Video IDs ---
+
+// 1. About College (Director Sir)
 function openAboutCollege() {
-  updateAboutText({ name: "Dr. S.K Sharma", role: "Director – MITRC", link: "https://mitrc.ac.in", showContact: true });
-  changeAboutVideo("images/director sir video.mp4");
-}
-// 2. Department (HOD)
-function openAboutDepartment() { 
-  updateAboutText({ name: "Dr. Arun Kumar", role: "Head of Department", link: null, showContact: false });
-  changeAboutVideo("images/department.mp4");
-}
-// 3. Placements (TPO)
-function openAboutPlacements() { 
-  updateAboutText({ name: "Dr. Pradeep Kumar Sharma", role: "Training & Placement Officer", link: null, showContact: false });
-  changeAboutVideo("images/tpo video.mp4");
-}
-// 4. Newsletter (Editor)
-function openAboutNewsletter() {
-  updateAboutText({ name: "Dr. R. Anusuya", role: "Editors Head", link: null, showContact: false });
-  changeAboutVideo("images/newsletter.mp4");
+  updateAboutText({ 
+    name: "Dr. S.K Sharma", 
+    role: "Director – MITRC", 
+    link: "https://mitrc.ac.in", 
+    showContact: true 
+  });
+  // Replace with your VIDEO ID
+  changeAboutVideo("https://www.youtube.com/embed/j2QgwM_t10E?si=1L9jzs7uchiX8bDF"); 
 }
 
+// 2. About Department (HOD Sir)
+function openAboutDepartment() { 
+  updateAboutText({ 
+    name: "Dr. Arun Kumar", 
+    role: "Head of Department", 
+    link: null, 
+    showContact: false 
+  });
+  changeAboutVideo("https://www.youtube.com/embed/Pt-cmwRLFes?si=pL9kWM42hxyHJDnP");
+}
+
+// 3. About Placements (TPO Sir)
+function openAboutPlacements() { 
+  updateAboutText({ 
+    name: "Dr. Pradeep Kumar Sharma", 
+    role: "Training & Placement Officer", 
+    link: null, 
+    showContact: false 
+  });
+  changeAboutVideo("https://www.youtube.com/embed/Wb9FBGn_Aus?si=8DIF3adigOOUTHBi");
+}
+
+// 4. About Newsletter (Editor)
+function openAboutNewsletter() {
+  updateAboutText({ 
+    name: "Dr. R. Anusuya", 
+    role: "Editors Head", 
+    link: null, 
+    showContact: false 
+  });
+  changeAboutVideo("https://www.youtube.com/embed/ipj8uJTzgqU?si=z6xs-XA82s0qIXpY");
+}
+
+// Helper to update text
 function updateAboutText({ name, role, link, showContact }) {
     const nameEl = document.getElementById("aboutName");
     const roleEl = document.getElementById("aboutRole");
@@ -266,16 +301,19 @@ function updateAboutText({ name, role, link, showContact }) {
 
     if (showContact && contactEl) {
       contactEl.style.display = "block";
-      contactEl.innerHTML = `📞 +91 7597676193/7597244813 <br> Email : hr@mitrc.ac.in`;
+      contactEl.innerHTML = `📞 +91 7597676193 / 7597244813 <br> Email : hr@mitrc.ac.in`;
     } else if (contactEl) {
       contactEl.style.display = "none";
     }
 }
 
+// Close Function (Stops Video)
 function closeAbout() {
   document.getElementById("aboutOverlay").style.display = "none";
-  const vids = document.querySelectorAll("video");
-  vids.forEach(v => { v.pause(); v.currentTime = 0; });
+  const iframe = document.getElementById("aboutVideo");
+  if(iframe) {
+      iframe.src = ""; // Stop video by clearing source
+  }
 }
 
 /* ===============================
@@ -291,13 +329,13 @@ window.addEventListener("scroll", () => {
 });
 
 /* ===============================
-   5. CINEMATIC INTRO & BOOK LOGIC
+   5. CINEMATIC INTRO & STACK LOGIC
 ================================ */
 const enterBtn = document.getElementById("enterNewsletter");
 const cinematicOverlay = document.getElementById("cinematicOverlay");
 const introVideo = document.getElementById("introVideo");
 const cinematicContent = document.getElementById("cinematicContent");
-const bookContainer = document.getElementById("bookContainer");
+const bookContainer = document.getElementById("bookContainer"); 
 const newsletterFrame = document.getElementById("newsletterFrame");
 
 // A. ENTER BUTTON
@@ -331,8 +369,7 @@ if(enterBtn) {
   });
 }
 
-// B. VIDEO END
-// B. VIDEO END
+// B. VIDEO END -> SHOW STACK
 if(introVideo) {
   introVideo.addEventListener("ended", () => {
     introVideo.style.transition = "all 1s ease";
@@ -341,12 +378,15 @@ if(introVideo) {
 
     setTimeout(() => {
       cinematicOverlay.style.display = "none";
-      bookContainer.style.display = "flex";
       
-      // 🔥 IMPORTANT FIX: Book dikhane se pehle usse reset karo
-      resetBook(); 
+      // Reset Stack before showing to ensure Page 1 is on top
+      resetStack();
       
-      bookContainer.classList.add('active'); 
+      if(bookContainer) {
+          bookContainer.style.display = "flex";
+          bookContainer.classList.add('active'); // For visibility/animations
+      }
+      
       if(newsletterFrame) newsletterFrame.style.display = "none";
     }, 1000);
   });
@@ -356,10 +396,12 @@ if(introVideo) {
 window.addEventListener("popstate", function (event) {
   
   const isCinematicOpen = cinematicOverlay && cinematicOverlay.style.display === "flex";
-  const isBookOpen = bookContainer && bookContainer.style.display === "flex";
+  // Check if stack is open by active class
+  const isStackOpen = bookContainer && bookContainer.classList.contains('active');
   
-  if (isCinematicOpen || isBookOpen) {
+  if (isCinematicOpen || isStackOpen) {
     if(cinematicOverlay) cinematicOverlay.style.display = "none";
+    
     if(bookContainer) {
         bookContainer.style.display = "none";
         bookContainer.classList.remove('active');
@@ -385,69 +427,70 @@ window.addEventListener("popstate", function (event) {
     closeChatbot();
   }
 });
+
 /* ===============================
-   6. BOOK NAVIGATION (FIXED & RESET LOGIC)
+   6. STACK NAVIGATION (FLYING CARDS)
 ================================ */
-let currentBookPage = 0;
-const bookPages = document.querySelectorAll('.book-page');
-const pageDisplay = document.getElementById("currentPageDisplay");
+let currentCardIndex = 0;
+const stackCards = document.querySelectorAll('.stack-card');
+const stackCounter = document.getElementById('currentCardNum');
+const totalCards = stackCards.length;
 
-// 🔥 NEW FUNCTION: Book ko hamesha Page 1 se start karne ke liye
-function resetBook() {
-  currentBookPage = 0; // Counter 0 par set karo
-  
-  bookPages.forEach((page, index) => {
-    page.classList.remove('flipped'); // Saare page wapas palto (band karo)
-    
-    // Z-Index sahi karo (Pehla page sabse upar)
-    page.style.zIndex = bookPages.length - index; 
-  });
-  
-  updateCounter();
+// Reset function (Ensures Card 1 is top)
+function resetStack() {
+  currentCardIndex = 0;
+  stackCards.forEach(card => card.classList.remove('fly-away'));
+  updateStackCounter();
 }
 
-// Window load hote hi setup karo
-window.addEventListener('load', resetBook);
-
-function updateCounter() {
-  if(pageDisplay) {
-    pageDisplay.innerText = currentBookPage + 1;
+function updateStackCounter() {
+  if(stackCounter) {
+    stackCounter.innerText = currentCardIndex + 1;
   }
 }
 
-function nextPage() {
-  if (currentBookPage < bookPages.length) {
-    const page = bookPages[currentBookPage];
-    page.classList.add('flipped');
-    page.style.zIndex = currentBookPage + 1; 
-    currentBookPage++;
-    updateCounter();
+// Next Card: Upar wale card ko uda do
+function nextCard() {
+  if (currentCardIndex < totalCards - 1) {
+    stackCards[currentCardIndex].classList.add('fly-away');
+    currentCardIndex++;
+    updateStackCounter();
   }
 }
 
-function prevPage() {
-  if (currentBookPage > 0) {
-    currentBookPage--;
-    const page = bookPages[currentBookPage];
-    page.classList.remove('flipped');
-    page.style.zIndex = bookPages.length - currentBookPage;
-    updateCounter();
+// Prev Card: Pichle card ko wapas le aao
+function prevCard() {
+  if (currentCardIndex > 0) {
+    currentCardIndex--;
+    stackCards[currentCardIndex].classList.remove('fly-away');
+    updateStackCounter();
   }
 }
+
 /* ===============================
-   7. TOUCH SWIPE & KEYBOARD LOGIC
+   7. KEYBOARD & SWIPE LOGIC (STACK)
 ================================ */
+// Keyboard Logic
+document.addEventListener("keydown", function(e) {
+  // Check if Stack container is visible
+  const cont = document.getElementById("bookContainer");
+  if (cont && (cont.style.display === "flex" || cont.classList.contains('active'))) {
+    if (e.key === "ArrowRight") nextCard();
+    if (e.key === "ArrowLeft") prevCard();
+  }
+});
+
+// Touch Swipe Logic
 let touchStartX = 0;
 let touchEndX = 0;
-const bookArea = document.getElementById("bookContainer");
+const stackArea = document.getElementById("bookContainer");
 
-// Swipe Logic
-if (bookArea) {
-  bookArea.addEventListener("touchstart", (e) => {
+if (stackArea) {
+  stackArea.addEventListener("touchstart", (e) => {
     touchStartX = e.changedTouches[0].screenX;
   }, {passive: true});
 
-  bookArea.addEventListener("touchend", (e) => {
+  stackArea.addEventListener("touchend", (e) => {
     touchEndX = e.changedTouches[0].screenX;
     handleSwipe();
   }, {passive: true});
@@ -455,19 +498,12 @@ if (bookArea) {
 
 function handleSwipe() {
   const threshold = 50;
+  // Swipe Left -> Next Card (Uda do)
   if (touchStartX - touchEndX > threshold) {
-    nextPage(); // Swipe Left -> Next
+    nextCard(); 
   }
+  // Swipe Right -> Prev Card (Wapas lao)
   if (touchEndX - touchStartX > threshold) {
-    prevPage(); // Swipe Right -> Prev
+    prevCard(); 
   }
 }
-
-// Keyboard Logic
-document.addEventListener("keydown", function(e) {
-  // Only work if book is open
-  if (bookContainer && bookContainer.style.display === "flex") {
-    if (e.key === "ArrowRight") nextPage();
-    if (e.key === "ArrowLeft") prevPage();
-  }
-});

@@ -677,24 +677,24 @@ body.chatbot-focus > *:not(#chatbot-container) {
 }
 
 /* CONTENT */
-#aboutContent {
-  display: none;
-  position: relative;
-  height: 100%;
-  padding: 40px;
-  text-align: center;
-  color: #fff;
-}
-
-#aboutContent video {
-  width: 80%;
+/* ===== YOUTUBE IFRAME STYLING ===== */
+#aboutContent iframe {
+  margin-top: 50px;
+  width: 100%;
   max-width: 900px;
+  aspect-ratio: 16 / 9; /* YouTube ka standard ratio */
   border-radius: 16px;
   box-shadow: 0 0 60px rgba(56,189,248,0.6);
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .video-info {
   margin-top: 20px;
+  text-align: center !important;
+  display: block;
+
 }
 
 .video-info h2 {
@@ -1835,47 +1835,47 @@ html, body {
   color: #38bdf8; /* Current page blue color */
   font-weight: 600;
 }
-/* ===== STACK CONTAINER ===== */
+/* ===== 3D CARD STACK UI (NEW DESIGN) ===== */
+
+/* 1. Container - Full Screen Dark */
 .stack-container {
-  display: none; /* Initially hidden, JS will show it */
+  display: none; /* JS will show this */
   position: fixed !important;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: radial-gradient(circle at center, #1e293b 0%, #000 90%);
+  background: radial-gradient(circle at center, #1e293b 0%, #000 90%) !important;
   z-index: 100000;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* 3D effect ke liye zaroori */
+  perspective: 1000px;
+  overflow: hidden;
 }
 
-/* Jab active ho (JS se) */
-.stack-container.active {
-  display: flex;
-}
-
+/* 2. The Stack Wrapper */
 .card-stack {
   position: relative;
-  width: 400px;  /* Desktop size */
-  height: 560px; /* A4 Ratio approx */
+  width: 400px; /* Adjust based on image size */
+  height: 560px;
   transform-style: preserve-3d;
 }
 
-/* Individual Card Styling */
+/* 3. Individual Cards */
 .stack-card {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
   background: #000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   
-  /* Transition for smooth movement */
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s;
+  /* Shadow & Border for Premium Feel */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   
-  /* Thoda sa tilt taaki depth dikhe */
-  transform-origin: bottom center;
+  /* Transition for Smooth Flying */
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: bottom left; /* Rotate from bottom corner */
 }
 
 .stack-card img {
@@ -1883,58 +1883,18 @@ html, body {
   object-fit: cover;
 }
 
-/* ===== ANIMATION CLASSES (JS se add hongi) ===== */
-
-/* Jab card Left me udd jaye (Next dabane par) */
-.stack-card.fly-left {
-  transform: translateX(-150%) rotate(-15deg) scale(0.9);
+/* 4. ANIMATION: Flying Away Effect */
+/* Jab next dabayenge, card Left side ud jayega */
+.stack-card.fly-away {
+  transform: translateX(-120%) rotate(-15deg) scale(0.9);
   opacity: 0;
   pointer-events: none;
 }
 
-/* Mobile Responsive */
+/* 5. Mobile Responsive */
 @media (max-width: 768px) {
   .card-stack {
     width: 320px;
-    height: 450px;
+    height: 480px;
   }
-}
-/* =========================================
-   🔥 FINAL FIX: FORCE DISPLAY & BACKGROUND
-   (Isse sabse end mein paste karein)
-========================================= */
-
-#bookContainer {
-  /* Force Full Screen & Dark Background */
-  position: fixed !important;
-  top: 0; 
-  left: 0;
-  width: 100%; 
-  height: 100%;
-  
-  /* Dark Gradient taaki White Screen na aaye */
-  background: radial-gradient(circle at center, #1e293b 0%, #000 90%) !important;
-  
-  /* Z-Index High */
-  z-index: 100000 !important;
-  
-  /* Default hidden */
-  display: none;
-  
-  /* Centering */
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-}
-
-/* Jab JS 'active' class lagayega tab dikhega */
-#bookContainer.active {
-  display: flex !important;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }

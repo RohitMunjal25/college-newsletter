@@ -11,23 +11,20 @@
 
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="nav-left">
     <img src="./images/black logo.png" class="logo" alt="College Logo">
-    </div>
-    <div class="nav-center">
-      <span class="nav-title">Department of C.S.E Newsletter</span></br>
-     
-    </div>
-    <div class="nav-right">
-       <span>Volume-1</span>
-      <span>Issue-12</span> 
-    </div>
-  </header>
+  </div>
+  <div class="nav-center">
+    <span class="nav-title">Department of C.S.E Newsletter</span>
+  </div>
+  <div class="nav-right">
+     <span>Volume-1</span>
+     <span>Issue-12</span> 
+  </div>
+</header>
 
-<!-- ===== HERO ===== -->
-<section class="hero"></br></br></br>
+<section class="hero"><br><br><br>
   <h1 class="mobile-hero-title">✨ Interactive Digital Newsletter ✨</h1>
   <h1 class="desktop-hero-title">✨ Interactive Digital Newsletter ✨</h1>
   <p>CSE Department • Session 2025–26</p>
@@ -36,10 +33,10 @@
     <div class="card active"><img src="impetus data/cover page.png"><span>Cover Page</span></div>
     <div class="card far-right"><img src="impetus data/2.png"><span>Editorial Team</span></div>
     <div class="card far-right"><img src="impetus data/3.png"><span>Institute Vision & Mission</span></div>
-    <div class="card far right"><img src="impetus data/4.png"><span>Department Vision & Mission</span></div>
+    <div class="card far-right"><img src="impetus data/4.png"><span>Department Vision & Mission</span></div>
     <div class="card far-right"><img src="impetus data/5.png"><span>Director's Desk & HOD's Desk</span></div>
     <div class="card far-right"><img src="impetus data/6.png"><span>Seminar & Workshops</span></div>
-    <div class="card farright"><img src="impetus data/7.png"><span>Department Activities</span></div>
+    <div class="card far-right"><img src="impetus data/7.png"><span>Department Activities</span></div>
     <div class="card far-right"><img src="impetus data/8.png"><span>Student Achievements</span></div>
     <div class="card extreme-right"><img src="impetus data/9.png"><span>Placements</span></div>
     <div class="card extreme-right"><img src="impetus data/10.png"><span>Extra Curricular Activities</span></div>
@@ -47,16 +44,13 @@
     <div class="card extreme-right"><img src="impetus data/12.png"><span>Future Action Plans</span></div>
   </div>
 
-    <button class="enter-btn" id="enterNewsletter">
-
+  <button class="enter-btn" id="enterNewsletter">
     ENTER NEWSLETTER
     <span>Interactive 3D Experience</span>
   </button>
 </section>
 
-<!-- ===== BOTTOM ACTION BUTTONS ===== -->
 <div class="bottom-actions">
-
   <div class="action-card" id="introBtn" onclick="window.open('https://mitrc.ac.in/apply-for-admission/','_blank')">
     <span class="icon">&#9742;</span>
     <div class="text">
@@ -80,88 +74,69 @@
       <p>AI powered help</p>
     </div>
   </div>
-
-  
-</div>
-<div id="chatbot-icon" onclick="openChatbot('normal')">
-  🤖
 </div>
 
-
+<div id="chatbot-icon" onclick="openChatbot('normal')">🤖</div>
 
 <div id="chatbot-container">
   <div class="chat-header">
-    AI Chatbot
-    <span onclick="closeChatbot()">✖</span>
+    AI Chatbot <span onclick="closeChatbot()">✖</span>
   </div>
-
   <div class="chat-messages" id="chatMessages"></div>
-
   <div class="chat-input">
     <input type="text" id="chatInput" placeholder="Ask something..." />
     <button onclick="sendChat()">Send</button>
   </div>
 </div>
-<!-- ===== ABOUT COLLEGE OVERLAY ===== -->
+
 <div id="aboutOverlay">
 
-  <!-- LOADER -->
   <div id="aboutLoader" class="video-skeleton">
-  <div class="skeleton-video"></div>
-  <p style="color:#94a3b8;font-size:13px;">
-  Fetching video from server…
-</p>
+    <div class="skeleton-video"></div>
+    <p style="color:#94a3b8;font-size:13px;">Fetching video from server…</p>
+    <div class="skeleton-text"></div>
+    <div class="skeleton-text short"></div>
+  </div>
 
-  <div class="skeleton-text"></div>
-  <div class="skeleton-text short"></div>
-</div>
-
-  <!-- VIDEO SECTION -->
   <div id="aboutContent">
     <div class="person-section">
-    <video id="aboutVideo" controls playsinline>
-      <source src="images/director sir video.mp4" type="video/mp4">
-    </video>
+      
+      <iframe 
+        id="aboutVideo" 
+        src="" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+      </iframe>
 
-    <div class="video-info">
-      <h2 id="aboutName">Dr. S.K Sharma</h2>
-      <h4 id="aboutRole">Director – MITRC</h4>
+      <div class="video-info">
+        <h2 id="aboutName">Loading Name...</h2>
+        <h4 id="aboutRole">Loading Role...</h4>
 
-      <p class="visit-line" id="aboutVisit">
-        For more information visit us on  
-        <a id="aboutLink" href="https://mitrc.ac.in" target="_blank">www.mitrc.ac.in</a>
-      </p>
+        <p class="visit-line" id="aboutVisit" style="display:none;">
+          For more information visit us on  
+          <a id="aboutLink" href="https://www.mitrc.ac.in" target="_blank">www.mitrc.ac.in</a>
+        </p>
 
-      <p class="contact" id="aboutContact">
-        📞 +91 7597676193/7597244813 </br>
-          Email : hr@mitrc.ac.in 
+        <p class="contact" id="aboutContact" style="display:none;"></p>
+      </div>
 
     </div>
-    </div>
-
+    
     <span class="close-about" onclick="closeAbout()">✖</span>
   </div>
 
 </div>
-<!-- ===== SIDE ACTION BUTTONS ===== -->
-
-<!-- LEFT SIDE -->
 <div class="side-actions left">
-  <div class="side-btn" onclick="openAboutCollege()">
-    <span>About College</span>
-  </div>
-  <div class="side-btn" onclick="openAboutPlacements()">
-    <span>About Placements</span>
-  </div>
+  <div class="side-btn" onclick="openAboutCollege()"><span>About College</span></div>
+  <div class="side-btn" onclick="openAboutPlacements()"><span>About Placements</span></div>
 </div>
 
 <div class="side-actions right">
-  <div class="side-btn" onclick="openAboutDepartment()">
-    <span>About our Department</span>
-  </div>
-  <div class="side-btn" onclick="openAboutNewsletter()">
-    <span>About Newsletter</span>
-  </div>
+  <div class="side-btn" onclick="openAboutDepartment()"><span>About our Department</span></div>
+  <div class="side-btn" onclick="openAboutNewsletter()"><span>About Newsletter</span></div>
 </div>
 
 <div id="cinematicOverlay">
@@ -169,9 +144,7 @@
     <h1>Welcome to CSE Newsletter</h1>
     <h2>2025 – 26</h2>
     <p>Loading immersive experience</p>
-    <div class="progress-wrap">
-      <div class="progress-bar"></div>
-    </div>
+    <div class="progress-wrap"><div class="progress-bar"></div></div>
   </div>
 
   <video id="introVideo" src="pages of newsletter/Impetus.mp4" muted playsinline style="display:none;"></video>
@@ -181,51 +154,31 @@
   </div>
 </div>
 
-<div id="bookContainer" class="book-container">
+<div id="bookContainer" class="stack-container">
   
-  <button class="arrow-btn arrow-left" onclick="prevPage()">&#10094;</button>
+  <button class="arrow-btn arrow-left" onclick="prevCard()">&#10094;</button>
 
-  <div class="book" id="newsletterBook">
-    
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/cover page.png" alt="Cover"></div>
-      <div class="page-back" style="background: #111;"></div> </div>
-    
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/2.png" alt="Editorial"></div>
-      <div class="page-back"><img src="impetus data/3.png" alt="Inst Vision"></div>
-    </div>
-
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/4.png" alt="Dept Vision"></div>
-      <div class="page-back"><img src="impetus data/5.png" alt="Director Desk"></div>
-    </div>
-
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/6.png" alt="Seminar"></div>
-      <div class="page-back"><img src="impetus data/7.png" alt="Activities"></div>
-    </div>
-
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/8.png" alt="Achievements"></div>
-      <div class="page-back"><img src="impetus data/9.png" alt="Placements"></div>
-    </div>
-
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/10.png" alt="Extra Curricular"></div>
-      <div class="page-back"><img src="impetus data/11.png" alt="Testimonials"></div>
-    </div>
-
-    <div class="book-page">
-      <div class="page-front"><img src="impetus data/12.png" alt="Future Plans"></div>
-      <div class="page-back" style="background: #111;"></div> </div>
-
+  <div class="card-stack">
+    <div class="stack-card" style="z-index: 12;"><img src="impetus data/cover page.png" alt="Cover"></div>
+    <div class="stack-card" style="z-index: 11;"><img src="impetus data/2.png" alt="Page 2"></div>
+    <div class="stack-card" style="z-index: 10;"><img src="impetus data/3.png" alt="Page 3"></div>
+    <div class="stack-card" style="z-index: 9;"><img src="impetus data/4.png" alt="Page 4"></div>
+    <div class="stack-card" style="z-index: 8;"><img src="impetus data/5.png" alt="Page 5"></div>
+    <div class="stack-card" style="z-index: 7;"><img src="impetus data/6.png" alt="Page 6"></div>
+    <div class="stack-card" style="z-index: 6;"><img src="impetus data/7.png" alt="Page 7"></div>
+    <div class="stack-card" style="z-index: 5;"><img src="impetus data/8.png" alt="Page 8"></div>
+    <div class="stack-card" style="z-index: 4;"><img src="impetus data/9.png" alt="Page 9"></div>
+    <div class="stack-card" style="z-index: 3;"><img src="impetus data/10.png" alt="Page 10"></div>
+    <div class="stack-card" style="z-index: 2;"><img src="impetus data/11.png" alt="Page 11"></div>
+    <div class="stack-card" style="z-index: 1;"><img src="impetus data/12.png" alt="Page 12"></div>
   </div>
 
-  <button class="arrow-btn arrow-right" onclick="nextPage()">&#10095;</button>
+  <button class="arrow-btn arrow-right" onclick="nextCard()">&#10095;</button>
 
-  <div class="page-counter">PAGE <span id="currentPageDisplay">1</span> / 7</div>
+  <div class="page-counter">CARD <span id="currentCardNum">1</span> / 12</div>
+
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
