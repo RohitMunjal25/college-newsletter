@@ -545,7 +545,34 @@ if (chatbotIcon) {
 
 // 2. Close Button Click -> Close Chat
 // (Ensure karein aapke HTML mein close button par class 'close-btn' ho)
-const closeBtn = document.querySelector(".chat-header"); 
-if (closeBtn) {
-    closeBtn.addEventListener("click", closeChatbot);
+function closeChatbot() {
+  const chat = document.getElementById("chatbot-container");
+  
+  if(chat) {
+      // 1. Chatbot ko chhupao
+      chat.style.display = "none";
+      chat.classList.remove("focus-mode");
+
+      // ----------------------------------------------------
+      // 🛑 STOP VIDEO LOGIC (Ye naya part hai)
+      // ----------------------------------------------------
+      
+      // A. YouTube Iframes ko reset karo
+      const iframes = chat.querySelectorAll("iframe");
+      iframes.forEach(iframe => {
+          const tempSrc = iframe.src;
+          iframe.src = "";       // Link hatao (Stop)
+          iframe.src = tempSrc;  // Link wapas daalo (Reset)
+      });
+
+      // B. Normal MP4 Videos ko pause karo
+      const videos = chat.querySelectorAll("video");
+      videos.forEach(video => {
+          video.pause();
+          video.currentTime = 0; // Shuru se set kar do
+      });
+      // ----------------------------------------------------
+  }
+  
+  document.body.classList.remove("chatbot-focus");
 }
