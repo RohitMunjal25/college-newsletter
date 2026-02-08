@@ -87,7 +87,6 @@ async function sendChat() {
       chatBox.innerHTML += `<div class="bot-msg">❌ Enter a valid email address</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
       return;
-
     }
 
     chatBox.innerHTML += `<div class="user-msg">${msg}</div>`;
@@ -133,27 +132,51 @@ async function sendChat() {
     });
 
     const data = await res.json();
-    
+
     let botHTML = `<div class="bot-msg"><b>Bot:</b><br>`;
-    
+
+    // Case 1: Agar Reply Object hai (Text/Image/Video)
     if (typeof data.reply === "object" && data.reply !== null) {
-       if (data.reply.text) botHTML += `<p>${data.reply.text}</p>`;
-       if (data.reply.image) botHTML += `<img src="${data.reply.image}" class="chat-img" loading="lazy">`;
-    } else if (typeof data.reply === "string" && data.reply.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-       botHTML += `<img src="${data.reply}" class="chat-img" loading="lazy">`;
-    } else {
-       botHTML += data.reply;
+      
+      if (data.reply.text) {
+        botHTML += `<p>${data.reply.text}</p>`;
+      }
+
+      if (data.reply.image) {
+        botHTML += `<img src="${data.reply.image}" class="chat-img" loading="lazy">`;
+      }
+
+      if (data.reply.video) {
+        if (data.reply.video.includes("youtube.com") || data.reply.video.includes("embed") || data.reply.video.includes("youtu.be")) {
+          botHTML += `
+            <div class="chat-yt-container">
+              <iframe src="${data.reply.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>`;
+        } else {
+          botHTML += `
+            <video controls class="chat-video" width="100%">
+              <source src="${data.reply.video}" type="video/mp4">
+              Your browser does not support video.
+            </video>`;
+        }
+      }
+    } 
+    // Case 2: Agar Reply sirf String hai
+    else {
+      botHTML += data.reply;
     }
+
     botHTML += `</div>`;
-    
     chatBox.innerHTML += botHTML;
+    chatBox.scrollTop = chatBox.scrollHeight;
 
   } catch (error) {
-    chatBox.innerHTML += `<div class="bot-msg">⚠️ Server is waking up (Free Tier). Please wait 30s and try again.</div>`;
+    console.error(error);
+    chatBox.innerHTML += `<div class="bot-msg">⚠️ Server error. Try again later.</div>`;
   }
-  
-  chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+// ---------------------------------------------------------
 
 function showPredefinedQuestions() {
   const chatBox = document.getElementById("chatMessages");
@@ -163,6 +186,7 @@ function showPredefinedQuestions() {
       <button onclick="sendQuick('How to subscribe')">⭐ Subscribe</button>
       <button onclick="sendQuick('About Department')">ℹ️ Dept Info</button>
       <button onClick="sendQuick('seminar and workshops')">seminar and workshops</button>
+      <button onClick="sendQuick('sample video')">sample video</button>
     </div>
   `;
 }
@@ -506,4 +530,22 @@ function handleSwipe() {
   if (touchEndX - touchStartX > threshold) {
     prevCard(); 
   }
+}
+/* ===============================
+   8. CHATBOT CLICK HANDLERS
+================================ */
+
+// 1. Chatbot Icon Click -> Open Chat
+const chatbotIcon = document.getElementById("chatbot-icon");
+if (chatbotIcon) {
+    chatbotIcon.addEventListener("click", function() {
+        openChatbot("normal");
+    });
+}
+
+// 2. Close Button Click -> Close Chat
+// (Ensure karein aapke HTML mein close button par class 'close-btn' ho)
+const closeBtn = document.querySelector(".chat-header"); 
+if (closeBtn) {
+    closeBtn.addEventListener("click", closeChatbot);
 }

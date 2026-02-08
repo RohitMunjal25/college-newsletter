@@ -954,6 +954,7 @@ html, body {
     gap: 14px;
 
     max-width: 360px;
+
     margin: 16px auto 32px;
     padding: 0 16px;
 
@@ -1897,4 +1898,27 @@ html, body {
     width: 320px;
     height: 480px;
   }
+}
+/* ===== CHATBOT ONLY VIDEO FIX ===== */
+
+/* Video ka dabba (Container) */
+.chat-yt-container {
+  position: relative;
+  width: 100%;             /* Chat bubble ki poori choudai lega */
+  padding-bottom: 56.25%;  /* 16:9 Ratio (YouTube Standard) */
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;     /* Thode gole kone */
+  margin-top: 8px;
+  background: #000;        /* Loading ke time black dikhe */
+}
+
+/* Asli Iframe */
+.chat-yt-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
