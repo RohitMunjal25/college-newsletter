@@ -1,6 +1,3 @@
-/* ===============================
-   1. CARD CAROUSEL (HOMEPAGE)
-================================ */
 const cards = document.querySelectorAll(".card");
 let cardCurrent = 0; 
 
@@ -24,10 +21,6 @@ if(cards.length > 0) {
       updateCards();
     }, 5000);
 }
-
-/* ===============================
-   2. CHATBOT LOGIC
-================================ */
 let welcomeShown = false;
 let chatMode = "quick";
 
@@ -79,8 +72,6 @@ async function sendChat() {
   if (!msg) return;
 
   const chatBox = document.getElementById("chatMessages");
-
-  // --- EMAIL SUBSCRIPTION MODE ---
   if (chatMode === "email") {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(msg)) {
@@ -118,8 +109,6 @@ async function sendChat() {
     showPredefinedQuestions();
     return;
   }
-
-  // --- NORMAL CHAT MODE ---
   chatBox.innerHTML += `<div class="user-msg"><b>You:</b> ${msg}</div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
   input.value = "";
@@ -135,7 +124,6 @@ async function sendChat() {
 
     let botHTML = `<div class="bot-msg"><b>Bot:</b><br>`;
 
-    // Case 1: Agar Reply Object hai (Text/Image/Video)
     if (typeof data.reply === "object" && data.reply !== null) {
       
       if (data.reply.text) {
@@ -161,7 +149,6 @@ async function sendChat() {
         }
       }
     } 
-    // Case 2: Agar Reply sirf String hai
     else {
       botHTML += data.reply;
     }
@@ -175,44 +162,45 @@ async function sendChat() {
     chatBox.innerHTML += `<div class="bot-msg">⚠️ Server error. Try again later.</div>`;
   }
 }
-
-// ---------------------------------------------------------
-
 function showPredefinedQuestions() {
   const chatBox = document.getElementById("chatMessages");
   chatBox.innerHTML += `
     <div class="quick-questions">
-      <button onclick="sendQuick('download free newsletter')">📄 Download</button>
-      <button onclick="sendQuick('How to subscribe')">⭐ Subscribe</button>
-      <button onclick="sendQuick('About Department')">ℹ️ Dept Info</button>
-      <button onClick="sendQuick('seminar and workshops')">seminar and workshops</button>
-      <button onClick="sendQuick('sample video')">sample video</button>
+      <button onclick="sendQuick('Download Free Newsletter')">Download Free Newsletter</button>
+      <button onclick="sendQuick('Subscribe for Newsletter')">Subscribe for Newsletter</button>
+      <button onclick="sendQuick('About College')">About College</button>
+      <button onclick="sendQuick('About Department')">About Department</button>
+      <button onclick="sendQuick('Editorial team')">Editorial Team</button>
+      <button onClick="sendQuick('Seminar & Workshops')">Seminar & Workshops</button>
+      <button onclick="sendQuick('Hackathon Activities')">Hackathon Curricular Activities</button>
+      <button onclick="sendQuick('Department Activities')">Department Activities</button>
+      <button onclick="sendQuick('Placement Activities')">Placement Activities</button>
+      <button onclick="sendQuick('Extra Curricular Activities')">Extra Curricular Activities</button>
+      <button onclick="sendQuick('Testimonials')">Testimonials</button>
+      <button onclick="sendQuick('Glimps & Future Action Plans')">Glimps & Future Action Plans</button>
+      
+      
     </div>
   `;
 }
 
 function sendQuick(text) {
-
-  // 🔒 input ko hamesha locked rakho
   const input = document.getElementById("chatInput");
   input.disabled = true;
   input.blur();
-
-  // ⭐ Subscribe special case
   if (text.toLowerCase().includes("subscribe")) {
     chatMode = "email";
     input.disabled = false;
     input.type = "email";
     input.placeholder = "Enter email 📧";
 
-    setTimeout(() => input.focus(), 100); // keyboard sirf yahin
+    setTimeout(() => input.focus(), 100); 
     const chatBox = document.getElementById("chatMessages");
     chatBox.innerHTML += `<div class="bot-msg">⭐ Please enter your email address 👇</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
     return;
   }
 
-  // baaki sab quick replies
   input.value = text;
   sendChat();
 }
@@ -226,11 +214,6 @@ if(chatInputEl) {
       }
     });
 }
-
-/* ===============================
-   3. ABOUT OVERLAY LOGIC (YouTube Only)
-================================ */
-
 function changeAboutVideo(videoUrl) {
   history.pushState({ mode: 'about' }, "", "#about");
   const overlay = document.getElementById("aboutOverlay");
@@ -240,27 +223,19 @@ function changeAboutVideo(videoUrl) {
 
   if (!overlay) return;
 
-  // Show Overlay & Loader
   overlay.style.display = "block";
   if(loader) loader.style.display = "flex";
   if(content) content.style.display = "none";
 
-  // Set YouTube Source
   if (iframe && videoUrl) {
-    // Adding autoplay=1 ensures video plays when loaded
     iframe.src = videoUrl + "?autoplay=1&rel=0"; 
   }
 
-  // Fake Loading Effect (1.5s)
   setTimeout(() => {
     if(loader) loader.style.display = "none";
     if(content) content.style.display = "block";
   }, 1500);
 }
-
-// --- CONFIGURATION: Replace IDs below with your Real YouTube Video IDs ---
-
-// 1. About College (Director Sir)
 function openAboutCollege() {
   updateAboutText({ 
     name: "Dr. S.K Sharma", 
@@ -268,11 +243,9 @@ function openAboutCollege() {
     link: "https://mitrc.ac.in", 
     showContact: true 
   });
-  // Replace with your VIDEO ID
   changeAboutVideo("https://www.youtube.com/embed/j2QgwM_t10E?si=1L9jzs7uchiX8bDF"); 
 }
 
-// 2. About Department (HOD Sir)
 function openAboutDepartment() { 
   updateAboutText({ 
     name: "Dr. Arun Kumar", 
@@ -282,8 +255,6 @@ function openAboutDepartment() {
   });
   changeAboutVideo("https://www.youtube.com/embed/Pt-cmwRLFes?si=pL9kWM42hxyHJDnP");
 }
-
-// 3. About Placements (TPO Sir)
 function openAboutPlacements() { 
   updateAboutText({ 
     name: "Dr. Pradeep Kumar Sharma", 
@@ -293,8 +264,6 @@ function openAboutPlacements() {
   });
   changeAboutVideo("https://www.youtube.com/embed/Wb9FBGn_Aus?si=8DIF3adigOOUTHBi");
 }
-
-// 4. About Newsletter (Editor)
 function openAboutNewsletter() {
   updateAboutText({ 
     name: "Dr. R. Anusuya", 
@@ -304,8 +273,6 @@ function openAboutNewsletter() {
   });
   changeAboutVideo("https://www.youtube.com/embed/ipj8uJTzgqU?si=z6xs-XA82s0qIXpY");
 }
-
-// Helper to update text
 function updateAboutText({ name, role, link, showContact }) {
     const nameEl = document.getElementById("aboutName");
     const roleEl = document.getElementById("aboutRole");
@@ -330,19 +297,13 @@ function updateAboutText({ name, role, link, showContact }) {
       contactEl.style.display = "none";
     }
 }
-
-// Close Function (Stops Video)
 function closeAbout() {
   document.getElementById("aboutOverlay").style.display = "none";
   const iframe = document.getElementById("aboutVideo");
   if(iframe) {
-      iframe.src = ""; // Stop video by clearing source
+      iframe.src = ""; 
   }
 }
-
-/* ===============================
-   4. SIDE BUTTON SCROLL LOGIC
-================================ */
 const sideButtons = document.querySelectorAll(".side-actions");
 window.addEventListener("scroll", () => {
   if (window.scrollY > 120) {
@@ -351,23 +312,16 @@ window.addEventListener("scroll", () => {
     sideButtons.forEach(btn => btn.classList.remove("hide"));
   }
 });
-
-/* ===============================
-   5. CINEMATIC INTRO & STACK LOGIC
-================================ */
 const enterBtn = document.getElementById("enterNewsletter");
 const cinematicOverlay = document.getElementById("cinematicOverlay");
 const introVideo = document.getElementById("introVideo");
 const cinematicContent = document.getElementById("cinematicContent");
 const bookContainer = document.getElementById("bookContainer"); 
 const newsletterFrame = document.getElementById("newsletterFrame");
-
-// A. ENTER BUTTON
 if(enterBtn) {
   enterBtn.addEventListener("click", () => {
     history.pushState({ mode: 'immersive' }, "", "#immersive");
 
-    // Hide Homepage
     document.querySelector('.hero').style.display = 'none'; 
     document.querySelector('.bottom-actions').style.display = 'none';
 
@@ -392,8 +346,6 @@ if(enterBtn) {
     }, 3000);
   });
 }
-
-// B. VIDEO END -> SHOW STACK
 if(introVideo) {
   introVideo.addEventListener("ended", () => {
     introVideo.style.transition = "all 1s ease";
@@ -403,24 +355,20 @@ if(introVideo) {
     setTimeout(() => {
       cinematicOverlay.style.display = "none";
       
-      // Reset Stack before showing to ensure Page 1 is on top
       resetStack();
       
       if(bookContainer) {
           bookContainer.style.display = "flex";
-          bookContainer.classList.add('active'); // For visibility/animations
+          bookContainer.classList.add('active'); 
       }
       
       if(newsletterFrame) newsletterFrame.style.display = "none";
     }, 1000);
   });
 }
-
-// C. GLOBAL BACK BUTTON HANDLER
 window.addEventListener("popstate", function (event) {
   
   const isCinematicOpen = cinematicOverlay && cinematicOverlay.style.display === "flex";
-  // Check if stack is open by active class
   const isStackOpen = bookContainer && bookContainer.classList.contains('active');
   
   if (isCinematicOpen || isStackOpen) {
@@ -431,7 +379,6 @@ window.addEventListener("popstate", function (event) {
         bookContainer.classList.remove('active');
     }
     
-    // Show Homepage Back
     document.querySelector('.hero').style.display = 'flex'; 
     document.querySelector('.bottom-actions').style.display = 'flex';
 
@@ -451,16 +398,11 @@ window.addEventListener("popstate", function (event) {
     closeChatbot();
   }
 });
-
-/* ===============================
-   6. STACK NAVIGATION (FLYING CARDS)
-================================ */
 let currentCardIndex = 0;
 const stackCards = document.querySelectorAll('.stack-card');
 const stackCounter = document.getElementById('currentCardNum');
 const totalCards = stackCards.length;
 
-// Reset function (Ensures Card 1 is top)
 function resetStack() {
   currentCardIndex = 0;
   stackCards.forEach(card => card.classList.remove('fly-away'));
@@ -472,8 +414,6 @@ function updateStackCounter() {
     stackCounter.innerText = currentCardIndex + 1;
   }
 }
-
-// Next Card: Upar wale card ko uda do
 function nextCard() {
   if (currentCardIndex < totalCards - 1) {
     stackCards[currentCardIndex].classList.add('fly-away');
@@ -481,8 +421,6 @@ function nextCard() {
     updateStackCounter();
   }
 }
-
-// Prev Card: Pichle card ko wapas le aao
 function prevCard() {
   if (currentCardIndex > 0) {
     currentCardIndex--;
@@ -490,21 +428,13 @@ function prevCard() {
     updateStackCounter();
   }
 }
-
-/* ===============================
-   7. KEYBOARD & SWIPE LOGIC (STACK)
-================================ */
-// Keyboard Logic
 document.addEventListener("keydown", function(e) {
-  // Check if Stack container is visible
   const cont = document.getElementById("bookContainer");
   if (cont && (cont.style.display === "flex" || cont.classList.contains('active'))) {
     if (e.key === "ArrowRight") nextCard();
     if (e.key === "ArrowLeft") prevCard();
   }
 });
-
-// Touch Swipe Logic
 let touchStartX = 0;
 let touchEndX = 0;
 const stackArea = document.getElementById("bookContainer");
@@ -522,56 +452,39 @@ if (stackArea) {
 
 function handleSwipe() {
   const threshold = 50;
-  // Swipe Left -> Next Card (Uda do)
   if (touchStartX - touchEndX > threshold) {
     nextCard(); 
   }
-  // Swipe Right -> Prev Card (Wapas lao)
   if (touchEndX - touchStartX > threshold) {
     prevCard(); 
   }
 }
-/* ===============================
-   8. CHATBOT CLICK HANDLERS
-================================ */
-
-// 1. Chatbot Icon Click -> Open Chat
 const chatbotIcon = document.getElementById("chatbot-icon");
 if (chatbotIcon) {
     chatbotIcon.addEventListener("click", function() {
         openChatbot("normal");
     });
 }
-
-// 2. Close Button Click -> Close Chat
-// (Ensure karein aapke HTML mein close button par class 'close-btn' ho)
 function closeChatbot() {
   const chat = document.getElementById("chatbot-container");
   
   if(chat) {
-      // 1. Chatbot ko chhupao
       chat.style.display = "none";
       chat.classList.remove("focus-mode");
-
-      // ----------------------------------------------------
-      // 🛑 STOP VIDEO LOGIC (Ye naya part hai)
-      // ----------------------------------------------------
-      
-      // A. YouTube Iframes ko reset karo
       const iframes = chat.querySelectorAll("iframe");
       iframes.forEach(iframe => {
           const tempSrc = iframe.src;
-          iframe.src = "";       // Link hatao (Stop)
-          iframe.src = tempSrc;  // Link wapas daalo (Reset)
+          iframe.src = "";     
+          iframe.src = tempSrc; 
       });
 
-      // B. Normal MP4 Videos ko pause karo
+      
       const videos = chat.querySelectorAll("video");
       videos.forEach(video => {
           video.pause();
-          video.currentTime = 0; // Shuru se set kar do
+          video.currentTime = 0; 
       });
-      // ----------------------------------------------------
+      
   }
   
   document.body.classList.remove("chatbot-focus");
