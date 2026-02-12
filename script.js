@@ -57,14 +57,14 @@ function openChatbot(mode = "normal") {
   input.placeholder = "Choose a quick option above";
 }
 
-function closeChatbot() {
-  const chat = document.getElementById("chatbot-container");
-  if(chat) {
-      chat.style.display = "none";
-      chat.classList.remove("focus-mode");
-  }
-  document.body.classList.remove("chatbot-focus");
-}
+// function closeChatbot() {
+//   const chat = document.getElementById("chatbot-container");
+//   if(chat) {
+//       chat.style.display = "none";
+//       chat.classList.remove("focus-mode");
+//   }
+//   document.body.classList.remove("chatbot-focus");
+// }
 
 async function sendChat() {
   const input = document.getElementById("chatInput");
@@ -135,22 +135,55 @@ async function sendChat() {
       }
 
       if (data.reply.video) {
-        if (data.reply.video.includes("youtube.com") || data.reply.video.includes("embed") || data.reply.video.includes("youtu.be")) {
-          botHTML += `
-            <div class="chat-yt-container">
-              <iframe src="${data.reply.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>`;
-        } else {
-          botHTML += `
-            <video controls class="chat-video" width="100%">
-              <source src="${data.reply.video}" type="video/mp4">
-              Your browser does not support video.
-            </video>`;
-        }
-      }
-    } 
-    else {
-      botHTML += data.reply;
+
+  let videoSrc = data.reply.video;
+
+  // 🔹 Google Drive link fix
+  if (videoSrc.includes("drive.google.com")) {
+
+  // Remove query params
+  videoSrc = videoSrc.split("?")[0];
+
+  // Convert view to preview
+  videoSrc = videoSrc.replace("/view", "/preview");
+
+  botHTML += `
+    <div class="chat-yt-container">
+      <iframe 
+        src="${videoSrc}" 
+        frameborder="0" 
+        allow="autoplay" 
+        allowfullscreen>
+      </iframe>
+    </div>`;
+}
+
+  // 🔹 YouTube embed
+  else if (
+    videoSrc.includes("youtube.com") ||
+    videoSrc.includes("youtu.be") ||
+    videoSrc.includes("embed")
+  ) {
+    botHTML += `
+      <div class="chat-yt-container">
+        <iframe 
+          src="${videoSrc}" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>`;
+  }
+
+  // 🔹 Direct MP4
+  else {
+    botHTML += `
+      <video controls class="chat-video" width="100%">
+        <source src="${videoSrc}" type="video/mp4">
+        Your browser does not support video.
+      </video>`;
+  }
+}
     }
 
     botHTML += `</div>`;
