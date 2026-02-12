@@ -210,7 +210,7 @@ function showPredefinedQuestions() {
       <button onclick="sendQuick('Placement Activities')">Placement Activities</button>
       <button onclick="sendQuick('Extra Curricular Activities')">Extra Curricular Activities</button>
       <button onclick="sendQuick('Testimonials')">Testimonials</button>
-      <button onclick="sendQuick('Glimps & Future Action Plans')">Glimps & Future Action Plans</button>
+      <button onclick="sendQuick('Glimpses & Future Action Plans')">Glimpses & Future Action Plans</button>
       
       
     </div>
