@@ -185,6 +185,14 @@ async function sendChat() {
   }
 }
     }
+    if (data.reply.link) {
+  botHTML += `
+    <a href="${data.reply.link}" target="_blank" class="chat-download-btn">
+      ⬇ Download Now
+    </a>
+  `;
+}
+
 
     botHTML += `</div>`;
     chatBox.innerHTML += botHTML;
