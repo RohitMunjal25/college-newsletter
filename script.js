@@ -158,7 +158,6 @@ async function sendChat() {
     </div>`;
 }
 
-  // 🔹 YouTube embed
   else if (
     videoSrc.includes("youtube.com") ||
     videoSrc.includes("youtu.be") ||
