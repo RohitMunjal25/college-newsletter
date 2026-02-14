@@ -210,7 +210,7 @@ function showPredefinedQuestions() {
       <button onclick="sendQuick('Subscribe for Newsletter')">Subscribe for Newsletter</button>
       <button onclick="sendQuick('About College')">About College</button>
       <button onclick="sendQuick('About Department')">About Department</button>
-      <button onclick="sendQuick('Editorial team')">Editorial Team</button>
+      <button onclick="sendQuick('Editorial Head Message')">Editorial Team</button>
       <button onClick="sendQuick('Seminar & Workshops')">Seminar & Workshops</button>
       <button onclick="sendQuick('Hackathon Activities')">Hackathon Curricular Activities</button>
       <button onclick="sendQuick('Department Activities')">Department Activities</button>
@@ -218,7 +218,7 @@ function showPredefinedQuestions() {
       <button onclick="sendQuick('Extra Curricular Activities')">Extra Curricular Activities</button>
       <button onclick="sendQuick('Testimonials')">Testimonials</button>
       <button onclick="sendQuick('Glimpses & Future Action Plans')">Glimpses & Future Action Plans</button>
-      
+      <button onclick="sendQuick('Editor's Team')">Editor's Team</button>
       
     </div>
   `;
